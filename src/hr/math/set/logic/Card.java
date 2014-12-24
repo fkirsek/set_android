@@ -15,9 +15,9 @@ public class Card {
 		this.shading = shading;
 
 		int tmpRank = number.id();
-		tmpRank = 4 * tmpRank + color.id();
-		tmpRank = 4 * tmpRank + shape.id();
-		tmpRank = 4 * tmpRank + shading.id();
+		tmpRank = 3 * tmpRank + color.id();
+		tmpRank = 3 * tmpRank + shape.id();
+		tmpRank = 3 * tmpRank + shading.id();
 		rank = tmpRank;
 	}
 	
@@ -71,8 +71,7 @@ public class Card {
 
 	@Override
 	public String toString() {
-		return "Card [number=" + number + ", color=" + color + ", shape=" + shape + ", shading="
-				+ shading + ", rank=" + rank + "]";
+		return "C["+ rank + "]";
 	}
 
 }

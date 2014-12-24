@@ -9,5 +9,6 @@
     <string name="multiplayer">Multiplayer</string>
     <string name="stats">Statistics</string>
     <string name="exit">Exit</string>
+    <string name="title_activity_single_play">SinglePlayActivity</string>
 
 </resources>
