@@ -82,6 +82,11 @@ public class SinglePlayActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public void finishGame(View v){
+        Toast.makeText(SinglePlayActivity.this, "finished the game" , Toast.LENGTH_SHORT).show();
+		finish();
+	}
+	
 	
 	public class ImageAdapter extends BaseAdapter {
 	    private Context mContext;
