@@ -11,11 +11,18 @@
     tools:context="hr.math.set.MainActivity" >
 
     <Button
+        android:id="@+id/btnResumeGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/resume_game"
+        android:onClick="rsmSinglePlay" />
+
+    <Button
         android:id="@+id/btnNewGame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/new_game"
-        android:onClick="singlePlay" />
+        android:onClick="newSinglePlay" />
 
     <Button
         android:id="@+id/btnMultiplayer"
@@ -28,6 +35,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/stats" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings" />
 
     <Button
         android:id="@+id/btnExit"

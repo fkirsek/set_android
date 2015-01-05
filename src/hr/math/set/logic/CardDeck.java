@@ -34,14 +34,19 @@ public class CardDeck {
 			}
 		}
 	}
+	
+	public void reset() {
+		unshuffledCards.addAll(shuffeledCards);
+		shuffeledCards.clear();
+	}
 
-	public Card nextCard() {
+	public Card nextCard(boolean reshuffle) {
 		if (unshuffledCards.isEmpty()) {
 			// TODO
-			for (int i = 0; i < shuffeledCards.size(); i++) {
-				unshuffledCards.add(shuffeledCards.get(i));
+			if (reshuffle == false) {
+				return null;
 			}
-			shuffeledCards.clear();
+			reset();
 			for (int i = 0; i < Table.getInstance().size(); i++) {
 				shuffeledCards.add(Table.getInstance().get(i));
 				unshuffledCards.remove(Table.getInstance().get(i));

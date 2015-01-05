@@ -10,32 +10,44 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="hr.math.set.MainActivity" >
 
-<Button
+    <Button
         android:id="@+id/exitbutton"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:text="@string/exit"
         android:onClick="finishGame"
-         />
+        android:text="@string/exit" />
 
-<Button
-        android:layout_width="100dp"
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/exitbutton"
+        android:columnWidth="30dp"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="@string/hint" />
+        android:layout_above="@+id/gridview"
+        android:layout_toRightOf="@+id/exitbutton"
+        android:onClick="set"
+        android:text="Next Set" />
 
-<GridView 
-    android:id="@+id/gridview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@id/exitbutton"
-    android:columnWidth="30dp"
-    android:numColumns="3"
-    android:verticalSpacing="5dp"
-    android:horizontalSpacing="5dp"
-    android:stretchMode="columnWidth"
-    android:gravity="center" />
+    <Button
+        android:id="@+id/btnHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_toRightOf="@+id/button1"
+        android:onClick="hint"
+        android:text="@string/hint" />
 
 
 </RelativeLayout>

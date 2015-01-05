@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
+import android.util.Log;
 
 public class Table {
 
@@ -11,9 +14,10 @@ public class Table {
 
 	private List<Card> cards = new ArrayList<Card>();
 	private List<Card> selection = new ArrayList<Card>();
+	Random r = new Random();
 
 	private Table() {
-		initializeTable();
+		// initializeTable();
 	}
 
 	public static Table getInstance() {
@@ -23,35 +27,51 @@ public class Table {
 		return instance;
 	}
 
-	private void initializeTable() {
+	public void initializeTable() {
+		reset();
+		CardDeck.getInstance().reset();
 		for (int i = 0; i < 4; i++) {
 			drawNext3();
 		}
 		ensureSet();
 	}
 
-	public void ensureSet() {
-		while (!existsSet()) {
-			drawNext3();
-		}
+	public void reset() {
+		cards.clear();
+		selection.clear();
 	}
-	
-	public void removeSelected(){
-		for(int i = 0; i < 3; i++){
+
+	public boolean ensureSet() {
+		while (!existsSet()) {
+			if (!drawNext3()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void removeSelected() {
+		for (int i = 0; i < 3; i++) {
 			cards.remove(selection.get(i));
 		}
 	}
 
-	private void drawNext3() {
+	public boolean drawNext3() {
 		for (int i = 0; i < 3; i++) {
-			cards.add(CardDeck.getInstance().nextCard());
+			// TODO param of nextCard from sharedPref
+			Card c = CardDeck.getInstance().nextCard(true);
+			if (c == null) {
+				return false;
+			}
+			cards.add(c);
 		}
+		return true;
 	}
-	
+
 	public List<Card> cards() {
 		return new ArrayList<Card>(cards);
 	}
-	
+
 	public int size() {
 		return cards.size();
 	}
@@ -60,28 +80,60 @@ public class Table {
 		return cards.get(index);
 	}
 
-	private boolean existsSet() {
+	public void hint() {
+		clearSelection();
+		List<Card> set = getSet();
+		if (cards.size() > 12) {
+			selectCard(cards.indexOf(set.get(2)));
+		} else {
+			selectCard(cards.indexOf(set.get(r.nextInt(3))));
+		}
+	}
+
+	private List<Card> getSet() {
 		int n = cards.size();
 		for (int i = 0; i < n - 2; i++) {
 			for (int j = i + 1; j < n - 1; j++) {
 				for (int k = j + 1; k < n; k++) {
-					if (isSet(Arrays.asList(cards.get(i), cards.get(j), cards.get(k)))) {
-						return true;
+					List<Card> set = Arrays.asList(cards.get(i), cards.get(j), cards.get(k));
+					if (isSet(set)) {
+						return set;
 					}
 				}
 			}
 		}
-		return false;
+		return null;
+	}
+
+	// Test only - removes set from table
+	public void set() {
+		if (getSet() != null) {
+			for (Card c : getSet()) {
+				selectCard(cards.indexOf(c));
+			}
+			removeSelected();
+			if (size() < 12) {
+				drawNext3();
+			}
+			if (!ensureSet()) {
+				Log.d("TAG", "Kraj partije");
+			}
+			clearSelection();
+		}
+	}
+
+	private boolean existsSet() {
+		return getSet() != null;
 	}
 
 	public SetStatus selectCard(int index) {
 		Card card = cards.get(index);
-		if(selection.contains(card)){
-			selection.remove(card); 
-			return SetStatus.CARD_REMOVED;	
-		}
-		else selection.add(card);
-		
+		if (selection.contains(card)) {
+			selection.remove(card);
+			return SetStatus.CARD_REMOVED;
+		} else
+			selection.add(card);
+
 		if (selection.size() == 3) {
 			if (isSet(selection)) {
 				return SetStatus.SET_OK;
