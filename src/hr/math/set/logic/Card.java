@@ -71,7 +71,11 @@ public class Card {
 
 	@Override
 	public String toString() {
+		 return "c" + String.valueOf(number.id()) + String.valueOf(color.id())
+                 + String.valueOf(shape.id()) + String.valueOf(shading.id());
+		/*
 		return "C["+ rank + "]";
+		*/
 	}
 
 }
