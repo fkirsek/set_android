@@ -40,7 +40,8 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings" />
+        android:text="@string/settings"
+        android:onClick="settings" />
 
     <Button
         android:id="@+id/btnExit"

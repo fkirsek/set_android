@@ -55,6 +55,7 @@ public class SinglePlayActivity extends Activity {
 					if (!table.ensureSet()) {
 						Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT)
 								.show();
+						finish();
 					}
 					table.clearSelection();
 					((Button) findViewById(R.id.btnHint)).setEnabled(true);

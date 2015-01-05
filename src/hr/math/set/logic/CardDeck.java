@@ -8,6 +8,7 @@ public class CardDeck {
 
 	private static CardDeck instance;
 	private Random rnd = new Random();
+	boolean reshuffle;
 
 	private List<Card> unshuffledCards = new ArrayList<Card>();
 	private List<Card> shuffeledCards = new ArrayList<Card>();
@@ -21,6 +22,10 @@ public class CardDeck {
 			instance = new CardDeck();
 		}
 		return instance;
+	}
+		
+	public void setReshuffle(boolean reshuffle) {
+		this.reshuffle = reshuffle;
 	}
 
 	private void initializeCardDeck() {
@@ -40,7 +45,7 @@ public class CardDeck {
 		shuffeledCards.clear();
 	}
 
-	public Card nextCard(boolean reshuffle) {
+	public Card nextCard() {
 		if (unshuffledCards.isEmpty()) {
 			// TODO
 			if (reshuffle == false) {
