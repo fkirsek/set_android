@@ -1,21 +1,17 @@
 package hr.math.set;
 
-import hr.math.set.logic.Card;
 import hr.math.set.logic.Table;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class SinglePlayActivity extends Activity {
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +21,27 @@ public class SinglePlayActivity extends Activity {
 				null);
 
 		Table table = Table.getInstance();
-		List<Button> btns = new ArrayList<Button>();
-
 		// Test
-		for (int i = 0; i < 3; i++) {
-			LinearLayout tableRow = new LinearLayout(this);
-			tableRow.setOrientation(LinearLayout.HORIZONTAL);
-			for (int j = 0; j < table.size()/3; j++) {
-				Card card = table.get(i * 3 + j);
-				Button tmpButton = (Button) View.inflate(this, R.layout.simple_btn, null);
-				tmpButton.setText(card.toString());
-				tableRow.addView(tmpButton);
+		for (int i = 0; i < table.size() / 3; i++) {
+			LinearLayout tableRow = (LinearLayout) View.inflate(this, R.layout.table_row, null);//findViewById(rows[i]);
+			if (i % 2 == 1) {
+				tableRow.setBackgroundColor(getResources().getColor(android.R.color.black));
+			}
+			Log.d("TAG", "row" + i);
+			for (int j = 0; j < 3; j++) {
+				Log.d("TAG", "col" + j);
+				
+				if (tableRow == null) {
+					Log.d("TAG", "null");
+				}
+				
+				ImageButton imgBtn = (ImageButton) View
+						.inflate(this, R.layout.simple_img_btn, null);
+				imgBtn.setImageResource(R.drawable.c0000);
+				if (j % 2 == 0) {
+					imgBtn.setBackgroundColor(getResources().getColor(android.R.color.holo_purple));
+				}
+				tableRow.addView(imgBtn);
 			}
 			tableLayout.addView(tableRow);
 		}
