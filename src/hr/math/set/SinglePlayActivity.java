@@ -7,8 +7,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class SinglePlayActivity extends Activity {
 
@@ -17,10 +21,23 @@ public class SinglePlayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		LinearLayout tableLayout = (LinearLayout) View.inflate(this, R.layout.activity_single_play,
-				null);
+		// LinearLayout tableLayout = (LinearLayout) View.inflate(this, R.layout.activity_single_play,
+		//		null);
 
 		Table table = Table.getInstance();
+		
+		setContentView( R.layout.activity_single_play);
+
+	    GridView gridview = (GridView) findViewById(R.id.gridview);
+	    gridview.setAdapter(new ImageAdapter(this));
+
+	    gridview.setOnItemClickListener(new OnItemClickListener() {
+	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+	            Toast.makeText(SinglePlayActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+	        }
+	    });
+
+		/*
 		// Test
 		for (int i = 0; i < table.size() / 3; i++) {
 			LinearLayout tableRow = (LinearLayout) View.inflate(this, R.layout.table_row, null);//findViewById(rows[i]);
@@ -45,8 +62,9 @@ public class SinglePlayActivity extends Activity {
 			}
 			tableLayout.addView(tableRow);
 		}
-
-		setContentView(tableLayout);
+		*/
+		
+		
 	}
 
 	@Override

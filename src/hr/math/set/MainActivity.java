@@ -6,14 +6,29 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 public class MainActivity extends Activity {
+	
+	ImageButton button;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+	public void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+	    setContentView(R.layout.activity_main);
+
+	    button= (ImageButton)findViewById(R.id.imgButton);
+	    button.setOnClickListener(imgButtonHandler);
 	}
+
+
+	View.OnClickListener imgButtonHandler = new View.OnClickListener() {
+
+	    public void onClick(View v) {
+	        button.setImageResource(R.drawable.ic_launcher);
+
+	    }
+	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
