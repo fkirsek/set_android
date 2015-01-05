@@ -1,5 +1,7 @@
 package hr.math.set.logic;
 
+import hr.math.set.SinglePlayActivity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import android.util.Log;
+import android.widget.Toast;
 
 public class Table {
 
@@ -16,6 +19,9 @@ public class Table {
 	private List<Card> selection = new ArrayList<Card>();
 	Random r = new Random();
 
+	public final int GAME_NOT_DONE = 0;
+	public final int GAME_DONE = 1;
+	
 	private Table() {
 		// initializeTable();
 	}
@@ -29,7 +35,6 @@ public class Table {
 
 	public void initializeTable() {
 		reset();
-		CardDeck.getInstance().reset();
 		for (int i = 0; i < 4; i++) {
 			drawNext3();
 		}
@@ -39,6 +44,7 @@ public class Table {
 	public void reset() {
 		cards.clear();
 		selection.clear();
+		CardDeck.getInstance().reset();
 	}
 
 	public boolean ensureSet() {
@@ -59,7 +65,7 @@ public class Table {
 	public boolean drawNext3() {
 		for (int i = 0; i < 3; i++) {
 			// TODO param of nextCard from sharedPref
-			Card c = CardDeck.getInstance().nextCard(true);
+			Card c = CardDeck.getInstance().nextCard(false);
 			if (c == null) {
 				return false;
 			}
@@ -103,6 +109,27 @@ public class Table {
 			}
 		}
 		return null;
+	}
+	//takes an integer indicating what card was selected within the list of cards currently on the table
+	// a function that selects the card and checks if the cards selected make a set, need to be replaced, etc.
+	//most of the internal logic is here
+	public int selectCardAndCheck(int position){
+		SetStatus status = instance.selectCard(position);
+		if (status == SetStatus.SET_OK) {
+			instance.removeSelected();
+			if (instance.size() < 12) {
+				instance.drawNext3();
+			}
+			if (!instance.ensureSet()) {
+				instance.reset();
+				instance = null;
+				return GAME_DONE;
+			}
+			instance.clearSelection();
+		} else if (status == SetStatus.SET_FAIL) {
+			instance.clearSelection();
+		}
+		return GAME_NOT_DONE;
 	}
 
 	// Test only - removes set from table

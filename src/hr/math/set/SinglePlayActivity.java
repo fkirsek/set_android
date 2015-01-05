@@ -43,31 +43,30 @@ public class SinglePlayActivity extends Activity {
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				Toast.makeText(SinglePlayActivity.this, table.get(position).toString(),
-						Toast.LENGTH_SHORT).show();
-
-				SetStatus status = table.selectCard(position);
-				if (status == SetStatus.SET_OK) {
-					table.removeSelected();
-					if (table.size() < 12) {
-						table.drawNext3();
-					}
-					if (!table.ensureSet()) {
-						Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT)
-								.show();
-					}
-					table.clearSelection();
-					((Button) findViewById(R.id.btnHint)).setEnabled(true);
-				} else if (status == SetStatus.SET_FAIL) {
-					table.clearSelection();
-				}
-
+				
+				/*
+			 	Toast.makeText(SinglePlayActivity.this, table.get(position).toString(),
+						Toast.LENGTH_SHORT).show(); //just a check for position, unnecessary
+				*/
+				
+				int status = table.selectCardAndCheck(position);
 				adapter.notifyDataSetChanged();
-
+				if(status == table.GAME_DONE){
+					endGame();
+				}
+				else ((Button) findViewById(R.id.btnHint)).setEnabled(true);
 			}
-		});
+		}
+		);
 	}
 
+	public void endGame(){
+		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT)
+		.show(); //just a temporary end-of-game toast, will be changed
+		table = null; //probably not necessary
+		finish();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -94,14 +93,15 @@ public class SinglePlayActivity extends Activity {
 	}
 
 	public void hint(View v) {
-		Table.getInstance().hint();
+		table.hint();
 		// TODO uncomment in production ((Button)
 		// findViewById(R.id.btnHint)).setEnabled(false);
 		adapter.notifyDataSetChanged();
 	}
 
 	public void set(View v) {
-		Table.getInstance().set();
+		table.clearSelection();
+		table.set();
 		adapter.notifyDataSetChanged();
 	}
 

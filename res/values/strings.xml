@@ -13,5 +13,6 @@
     <string name="exit">Exit</string>
     <string name="title_activity_single_play">SinglePlayActivity</string>
     <string name="hint">Hint</string>
+    <string name="next_set">Next set</string>
 
 </resources>

@@ -37,7 +37,7 @@
         android:layout_above="@+id/gridview"
         android:layout_toRightOf="@+id/exitbutton"
         android:onClick="set"
-        android:text="Next Set" />
+        android:text="@string/next_set" />
 
     <Button
         android:id="@+id/btnHint"

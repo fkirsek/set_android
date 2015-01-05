@@ -19,10 +19,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		if (Table.getInstance().size() == 0) {
-			((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.GONE);
-		}
-
 		button = (ImageButton) findViewById(R.id.imgButton);
 		button.setOnClickListener(imgButtonHandler);
 	}
@@ -32,6 +28,16 @@ public class MainActivity extends Activity {
 			button.setImageResource(R.drawable.ic_launcher);
 		}
 	};
+	
+	@Override
+    public void onResume() {
+            super.onResume();
+            if (Table.getInstance().size() == 0) {
+                    ((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.GONE);
+            } else {
+                    ((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.VISIBLE);                        
+            }
+    };
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
