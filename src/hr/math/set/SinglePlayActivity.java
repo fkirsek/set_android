@@ -3,10 +3,12 @@ package hr.math.set;
 import hr.math.set.logic.Card;
 import hr.math.set.logic.SetStatus;
 import hr.math.set.logic.Table;
+import hr.math.set.util.Stopwatch;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -24,7 +27,14 @@ public class SinglePlayActivity extends Activity {
 	GridView gridview;
 	ImageAdapter adapter;
 	Table table;
-
+	Chronometer chronometer;
+	
+	protected void onPause(){
+		super.onPause();
+		Stopwatch.pause();
+		chronometer.stop();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,9 +44,20 @@ public class SinglePlayActivity extends Activity {
 		// null);
 
 		table = Table.getInstance();
-
 		setContentView(R.layout.activity_single_play);
 
+				
+		//for testing
+		Toast.makeText(SinglePlayActivity.this, Stopwatch.started.toString(), Toast.LENGTH_SHORT)
+		.show();
+		
+		//setting up the clock
+		Stopwatch.init();
+		chronometer = (Chronometer) findViewById(R.id.chronometer);
+		chronometer.setBase(SystemClock.elapsedRealtime() - Stopwatch.getElapsedTime() );
+		chronometer.start();
+
+		//setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
 		adapter = new ImageAdapter(this);
 		gridview.setAdapter(adapter);
@@ -85,7 +106,7 @@ public class SinglePlayActivity extends Activity {
 	public void endGame(){
 		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT)
 		.show(); //just a temporary end-of-game toast, will be changed
-		table = null; //probably not necessary
+		Stopwatch.reset();// reset the stopwatch
 		finish();
 	}
 	
@@ -109,8 +130,8 @@ public class SinglePlayActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void finishGame(View v) {
-		Toast.makeText(SinglePlayActivity.this, "finished the game", Toast.LENGTH_SHORT).show();
+	public void exit(View v) {
+		Toast.makeText(SinglePlayActivity.this, "Exited the game", Toast.LENGTH_SHORT).show(); //probably superfluous
 		finish();
 	}
 
