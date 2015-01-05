@@ -35,6 +35,12 @@ public class Table {
 			drawNext3();
 		}
 	}
+	
+	public void removeSelected(){
+		for(int i = 0; i < 3; i++){
+			cards.remove(selection.get(i));
+		}
+	}
 
 	private void drawNext3() {
 		for (int i = 0; i < 3; i++) {

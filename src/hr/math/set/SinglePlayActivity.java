@@ -23,7 +23,10 @@ import android.widget.Toast;
 
 public class SinglePlayActivity extends Activity {
 
-
+	GridView gridview;
+	ImageAdapter adapter;
+	Table table;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,18 +34,29 @@ public class SinglePlayActivity extends Activity {
 		// LinearLayout tableLayout = (LinearLayout) View.inflate(this, R.layout.activity_single_play,
 		//		null);
 
-		Table table = Table.getInstance();
+		table = Table.getInstance();
 		
 		setContentView( R.layout.activity_single_play);
 
-	    GridView gridview = (GridView) findViewById(R.id.gridview);
-	    gridview.setAdapter(new ImageAdapter(this));
+	    gridview = (GridView) findViewById(R.id.gridview);
+	    adapter = new ImageAdapter(this);
+	    gridview.setAdapter(adapter);
 
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 	            Toast.makeText(SinglePlayActivity.this, "" + position, Toast.LENGTH_SHORT).show();
 	            
-	            SetStatus status = Table.getInstance().selectCard(position);
+	            SetStatus status = table.selectCard(position);
+	            if(status == SetStatus.SET_OK){
+	            	table.removeSelected();
+	            	table.ensureSet();
+	            	table.clearSelection();
+	            }
+	            else if(status == SetStatus.SET_FAIL){
+	            	table.clearSelection();
+	            }
+	            
+	            adapter.notifyDataSetChanged();
 	            
 	        }
 	    });
@@ -77,11 +91,11 @@ public class SinglePlayActivity extends Activity {
 	    }
 
 	    public int getCount() {	    	
-	        return Table.getInstance().size();
+	        return table.size();
 	    }
 
 	    public Object getItem(int position) {
-	        return Table.getInstance().get(position);
+	        return table.get(position);
 	    }
 
 	    public long getItemId(int position) {
@@ -100,15 +114,18 @@ public class SinglePlayActivity extends Activity {
 	            imageView = (ImageView) convertView;
 	        }
 	        
-	        Card tempCard = Table.getInstance().get(position);
+	        Card tempCard = table.get(position);
 	        String cardName = tempCard.toString();
 	        String packageName = getPackageName();
 	        
 	        int resId = getResources().getIdentifier(cardName, "drawable", packageName);
 	        imageView.setImageResource(resId);
 	        
-	        if( Table.getInstance().getSelection().contains(tempCard) ){
+	        if( table.getSelection().contains(tempCard) ){
 	        	imageView.setBackgroundColor( Color.rgb(200, 0, 0) );
+	        }
+	        else{
+	        	imageView.setBackgroundColor(Color.alpha(0));
 	        }
 	        
 	        return imageView;
