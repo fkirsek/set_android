@@ -64,8 +64,7 @@ public class Table {
 
 	public boolean drawNext3() {
 		for (int i = 0; i < 3; i++) {
-			// TODO param of nextCard from sharedPref
-			Card c = CardDeck.getInstance().nextCard(false);
+			Card c = CardDeck.getInstance().nextCard();
 			if (c == null) {
 				return false;
 			}
@@ -89,10 +88,12 @@ public class Table {
 	public void hint() {
 		clearSelection();
 		List<Card> set = getSet();
-		if (cards.size() > 12) {
-			selectCard(cards.indexOf(set.get(2)));
-		} else {
-			selectCard(cards.indexOf(set.get(r.nextInt(3))));
+		if (set != null) {
+			if (cards.size() > 12) {
+				selectCard(cards.indexOf(set.get(2)));
+			} else {
+				selectCard(cards.indexOf(set.get(r.nextInt(3))));
+			}
 		}
 	}
 
@@ -134,6 +135,7 @@ public class Table {
 
 	// Test only - removes set from table
 	public void set() {
+		clearSelection();
 		if (getSet() != null) {
 			for (Card c : getSet()) {
 				selectCard(cards.indexOf(c));

@@ -14,5 +14,6 @@
     <string name="title_activity_single_play">SinglePlayActivity</string>
     <string name="hint">Hint</string>
     <string name="next_set">Next set</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

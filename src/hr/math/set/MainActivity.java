@@ -1,8 +1,10 @@
 package hr.math.set;
 
+import hr.math.set.logic.CardDeck;
 import hr.math.set.logic.Table;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +15,7 @@ import android.widget.ImageButton;
 public class MainActivity extends Activity {
 
 	ImageButton button;
+	SharedPreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,8 @@ public class MainActivity extends Activity {
 
 		button = (ImageButton) findViewById(R.id.imgButton);
 		button.setOnClickListener(imgButtonHandler);
+		
+		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 	}
 
 	View.OnClickListener imgButtonHandler = new View.OnClickListener() {
@@ -61,11 +66,19 @@ public class MainActivity extends Activity {
 	public void newSinglePlay(View view) {
 		Intent intent = new Intent(MainActivity.this, SinglePlayActivity.class);
 		Table.getInstance().initializeTable();
+		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
 		this.startActivity(intent);
 	}
 
 	public void rsmSinglePlay(View view) {
 		Intent intent = new Intent(MainActivity.this, SinglePlayActivity.class);
+		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
 		this.startActivity(intent);
 	}
+
+	public void settings(View view) {
+		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+		this.startActivity(intent);
+	}
+
 }

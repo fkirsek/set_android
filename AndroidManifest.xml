@@ -26,6 +26,10 @@
             android:name=".SinglePlayActivity"
             android:label="@string/title_activity_single_play" >
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

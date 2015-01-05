@@ -50,7 +50,29 @@ public class SinglePlayActivity extends Activity {
 				*/
 				
 				int status = table.selectCardAndCheck(position);
-				adapter.notifyDataSetChanged();
+//the below commented code has been moved to other functions
+/*
+	Toast.makeText(SinglePlayActivity.this, table.get(position).toString(),
+						Toast.LENGTH_SHORT).show();
+
+				SetStatus status = table.selectCard(position);
+				if (status == SetStatus.SET_OK) {
+					table.removeSelected();
+					if (table.size() < 12) {
+						table.drawNext3();
+					}
+					if (!table.ensureSet()) {
+						Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT)
+								.show();
+						finish();
+					}
+					table.clearSelection();
+					((Button) findViewById(R.id.btnHint)).setEnabled(true);
+				} else if (status == SetStatus.SET_FAIL) {
+					table.clearSelection();
+				}
+
+*/				adapter.notifyDataSetChanged();
 				if(status == table.GAME_DONE){
 					endGame();
 				}
