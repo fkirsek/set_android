@@ -75,7 +75,13 @@ public class Table {
 	}
 
 	public SetStatus selectCard(int index) {
-		selection.add(cards.get(index));
+		Card card = cards.get(index);
+		if(selection.contains(card)){
+			selection.remove(card); 
+			return SetStatus.CARD_REMOVED;	
+		}
+		else selection.add(card);
+		
 		if (selection.size() == 3) {
 			if (isSet(selection)) {
 				return SetStatus.SET_OK;

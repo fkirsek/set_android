@@ -44,7 +44,7 @@ public class SinglePlayActivity extends Activity {
 
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-	            Toast.makeText(SinglePlayActivity.this, "" + position, Toast.LENGTH_SHORT).show();
+	            Toast.makeText(SinglePlayActivity.this, table.get(position).toString() , Toast.LENGTH_SHORT).show();
 	            
 	            SetStatus status = table.selectCard(position);
 	            if(status == SetStatus.SET_OK){
