@@ -20,35 +20,39 @@ public class SinglePlayActivity extends Activity {
 
 	GridView gridview;
 	ImageAdapter adapter;
-	Table table;
 	Chronometer chronometer;
+	
+	//these two objects are pulled from the SinglePlayerObjects class
+	Table table;
+	Stopwatch stopwatch;
 
 	protected void onPause() {
 		super.onPause();
-		Stopwatch.pause();
+		stopwatch.pause();
 		chronometer.stop();
 	}
 
+	protected void onResume(){
+		super.onResume();
+		// setting up the clock
+		stopwatch.resume();
+		chronometer = (Chronometer) findViewById(R.id.chronometer);
+		chronometer.setBase(stopwatch.getWhenToStart());
+		chronometer.start();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_single_play);
 
-		table = Table.getInstance();
+		table = SinglePlayerObjects.table;
+		stopwatch = SinglePlayerObjects.stopwatch;
 
-		// for testing
-		Toast.makeText(SinglePlayActivity.this, Stopwatch.started.toString(), Toast.LENGTH_SHORT)
-				.show();
-
-		// setting up the clock
-		Stopwatch.init();
-		chronometer = (Chronometer) findViewById(R.id.chronometer);
-		chronometer.setBase(Stopwatch.getWhenToStart());
-		chronometer.start();
 
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
-		adapter = new ImageAdapter(this);
+		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
@@ -67,7 +71,7 @@ public class SinglePlayActivity extends Activity {
 
 	public void endGame() {
 		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show(); 
-		Stopwatch.reset();// reset the stopwatch
+		SinglePlayerObjects.clear(); //clear the objects from the SinglePlayerObjects class
 		finish();
 	}
 

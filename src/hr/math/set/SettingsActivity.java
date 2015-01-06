@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class SettingsActivity extends Activity {
@@ -52,6 +53,7 @@ public class SettingsActivity extends Activity {
 				int newNumPlayers = Integer.parseInt(((RadioButton) findViewById(checkedId)).getText().toString());
 				editor.putInt("numPlayers", newNumPlayers);
 				editor.commit();
+				Toast.makeText(getBaseContext(), String.valueOf(prefs.getInt("numPlayers", -100)), Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -59,16 +61,12 @@ public class SettingsActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.settings, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;

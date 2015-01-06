@@ -27,9 +27,8 @@ public class MultiPlayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multi_play);
 
-		table = Table.getInstance();
-
-		numPlayers = getSharedPreferences("SET", MODE_PRIVATE).getInt("numPlayers", 2);
+		table = MultiPlayerObjects.table;
+		numPlayers = MultiPlayerObjects.numPlayers;
 
 		if (numPlayers < 4) {
 			findViewById(R.id.imageView3).setVisibility(View.GONE);
@@ -41,7 +40,7 @@ public class MultiPlayActivity extends Activity {
 		}
 
 		gridview = (GridView) findViewById(R.id.gridview);
-		adapter = new ImageAdapter(this);
+		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {

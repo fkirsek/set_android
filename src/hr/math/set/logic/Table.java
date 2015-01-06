@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class Table {
 
-	private static Table instance;
+	private CardDeck deck;
 
 	private List<Card> cards = new ArrayList<Card>();
 	private List<Card> selection = new ArrayList<Card>();
@@ -18,16 +18,21 @@ public class Table {
 
 	public final int GAME_NOT_DONE = 0;
 	public final int GAME_DONE = 1;
+
+	//constructor if the reshuffle setting WAS provided
+	public Table(boolean reshuf){
+		deck = new CardDeck(reshuf);
+		initializeTable(); // initialize the field
+	}
 	
-	private Table() {
-		// initializeTable();
+	//if the reshuffle setting wasn't provided
+	public Table() {
+		deck = new CardDeck();
+		initializeTable(); // initialize the field
 	}
 
-	public static Table getInstance() {
-		if (instance == null) {
-			instance = new Table();
-		}
-		return instance;
+	public Table getInstance() {
+		return this;
 	}
 
 	public void initializeTable() {
@@ -35,13 +40,14 @@ public class Table {
 		for (int i = 0; i < 4; i++) {
 			drawNext3();
 		}
-		ensureSet();
+		// ensureSet(); //this is most probably unneeded since a set is
+		// guaranteed in first 12 cards
 	}
 
 	public void reset() {
 		cards.clear();
 		selection.clear();
-		CardDeck.getInstance().reset();
+		deck.reset();
 	}
 
 	public boolean ensureSet() {
@@ -61,7 +67,7 @@ public class Table {
 
 	public boolean drawNext3() {
 		for (int i = 0; i < 3; i++) {
-			Card c = CardDeck.getInstance().nextCard();
+			Card c = deck.nextCard(this);
 			if (c == null) {
 				return false;
 			}
@@ -99,7 +105,8 @@ public class Table {
 		for (int i = 0; i < n - 2; i++) {
 			for (int j = i + 1; j < n - 1; j++) {
 				for (int k = j + 1; k < n; k++) {
-					List<Card> set = Arrays.asList(cards.get(i), cards.get(j), cards.get(k));
+					List<Card> set = Arrays.asList(cards.get(i), cards.get(j),
+							cards.get(k));
 					if (isSet(set)) {
 						return set;
 					}
@@ -108,25 +115,27 @@ public class Table {
 		}
 		return null;
 	}
-	//takes an integer indicating what card was selected within the list of cards currently on the table
-	// a function that selects the card and checks if the cards selected make a set, need to be replaced, etc.
-	//most of the internal logic is here
-	public SetStatus selectCardAndCheck(int position){
+
+	// takes an integer indicating what card was selected within the list of
+	// cards currently on the table
+	// a function that selects the card and checks if the cards selected make a
+	// set, need to be replaced, etc.
+	// most of the internal logic is here
+	public SetStatus selectCardAndCheck(int position) {
 		// TODO provjeri ako sam nesto zabrljao
-		SetStatus status = instance.selectCard(position);
+		SetStatus status = selectCard(position);
 		if (status == SetStatus.SET_OK) {
-			instance.removeSelected();
-			if (instance.size() < 12) {
-				instance.drawNext3();
+			removeSelected();
+			if (size() < 12) {
+				drawNext3();
 			}
-			if (!instance.ensureSet()) {
-				instance.reset();
-				instance = null;
+			if (!ensureSet()) {
+				reset();
 				return SetStatus.GAME_DONE;
 			}
-			instance.clearSelection();
+			clearSelection();
 		} else if (status == SetStatus.SET_FAIL) {
-			instance.clearSelection();
+			clearSelection();
 		}
 		return status;
 	}

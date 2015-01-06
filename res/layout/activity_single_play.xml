@@ -53,6 +53,7 @@
         android:numColumns="3"
         android:gravity="fill_horizontal|fill_vertical"
         android:verticalSpacing="5dp"
+        android:layout_centerHorizontal="true"
          />
 
 

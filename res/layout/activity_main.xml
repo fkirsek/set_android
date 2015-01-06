@@ -49,13 +49,7 @@
         android:id="@+id/btnExit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="exit"
         android:text="@string/exit" />
-    
-    <ImageButton 
-        android:id = "@+id/imgButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="tempOpis"
-        />
-
+   
 </LinearLayout>
