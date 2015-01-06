@@ -1,25 +1,19 @@
 package hr.math.set;
 
-import hr.math.set.logic.Card;
 import hr.math.set.logic.SetStatus;
 import hr.math.set.logic.Table;
+import hr.math.set.util.ImageAdapter;
 import hr.math.set.util.Stopwatch;
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 public class SinglePlayActivity extends Activity {
@@ -28,101 +22,63 @@ public class SinglePlayActivity extends Activity {
 	ImageAdapter adapter;
 	Table table;
 	Chronometer chronometer;
-	
-	protected void onPause(){
+
+	protected void onPause() {
 		super.onPause();
 		Stopwatch.pause();
 		chronometer.stop();
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// LinearLayout tableLayout = (LinearLayout) View.inflate(this,
-		// R.layout.activity_single_play,
-		// null);
-
-		table = Table.getInstance();
 		setContentView(R.layout.activity_single_play);
 
-				
-		//for testing
+		table = Table.getInstance();
+
+		// for testing
 		Toast.makeText(SinglePlayActivity.this, Stopwatch.started.toString(), Toast.LENGTH_SHORT)
-		.show();
-		
-		//setting up the clock
+				.show();
+
+		// setting up the clock
 		Stopwatch.init();
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
-		chronometer.setBase(Stopwatch.getWhenToStart() );
+		chronometer.setBase(Stopwatch.getWhenToStart());
 		chronometer.start();
 
-		//setting up the grid view
+		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
 		adapter = new ImageAdapter(this);
 		gridview.setAdapter(adapter);
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-				
-				/*
-			 	Toast.makeText(SinglePlayActivity.this, table.get(position).toString(),
-						Toast.LENGTH_SHORT).show(); //just a check for position, unnecessary
-				*/
-				
-				int status = table.selectCardAndCheck(position);
-//the below commented code has been moved to other functions
-/*
-	Toast.makeText(SinglePlayActivity.this, table.get(position).toString(),
-						Toast.LENGTH_SHORT).show();
 
-				SetStatus status = table.selectCard(position);
-				if (status == SetStatus.SET_OK) {
-					table.removeSelected();
-					if (table.size() < 12) {
-						table.drawNext3();
-					}
-					if (!table.ensureSet()) {
-						Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT)
-								.show();
-						finish();
-					}
-					table.clearSelection();
-					((Button) findViewById(R.id.btnHint)).setEnabled(true);
-				} else if (status == SetStatus.SET_FAIL) {
-					table.clearSelection();
-				}
+				SetStatus status = table.selectCardAndCheck(position);
 
-*/				adapter.notifyDataSetChanged();
-				if(status == table.GAME_DONE){
+				adapter.notifyDataSetChanged();
+				if (status == SetStatus.GAME_DONE) {
 					endGame();
-				}
-				else ((Button) findViewById(R.id.btnHint)).setEnabled(true);
+				} else
+					((Button) findViewById(R.id.btnHint)).setEnabled(true);
 			}
-		}
-		);
+		});
 	}
 
-	public void endGame(){
-		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT)
-		.show(); //just a temporary end-of-game toast, will be changed
+	public void endGame() {
+		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show(); 
 		Stopwatch.reset();// reset the stopwatch
 		finish();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.single_play, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -131,7 +87,8 @@ public class SinglePlayActivity extends Activity {
 	}
 
 	public void exit(View v) {
-		Toast.makeText(SinglePlayActivity.this, "Exited the game", Toast.LENGTH_SHORT).show(); //probably superfluous
+		Toast.makeText(SinglePlayActivity.this, "Exited the game", Toast.LENGTH_SHORT).show(); // probably
+																								// superfluous
 		finish();
 	}
 
@@ -146,67 +103,6 @@ public class SinglePlayActivity extends Activity {
 		table.clearSelection();
 		table.set();
 		adapter.notifyDataSetChanged();
-	}
-
-	public class ImageAdapter extends BaseAdapter {
-		private Context mContext;
-
-		public ImageAdapter(Context c) {
-			mContext = c;
-		}
-
-		public int getCount() {
-			return table.size();
-		}
-
-		public Object getItem(int position) {
-			return table.get(position);
-		}
-
-		public long getItemId(int position) {
-			return position;
-		}
-
-		// create a new ImageView for each item referenced by the Adapter
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ImageView imageView;
-			if (convertView == null) { // if it's not recycled, initialize some
-										// attributes
-				imageView = new ImageView(mContext);
-				imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-				imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-				imageView.setPadding(8, 8, 8, 8);
-			} else {
-				imageView = (ImageView) convertView;
-			}
-
-			Card tempCard = table.get(position);
-			String cardName = tempCard.toString();
-			String packageName = getPackageName();
-
-			int resId = getResources().getIdentifier(cardName, "drawable", packageName);
-			imageView.setImageResource(resId);
-
-			if (table.getSelection().contains(tempCard)) {
-				imageView.setBackgroundColor(Color.rgb(200, 0, 0));
-			} else {
-				imageView.setBackgroundColor(Color.alpha(0));
-			}
-
-			return imageView;
-
-		}
-
-		// references to our images
-		/*
-		 * private Integer[] mThumbIds = { R.drawable.c0000, R.drawable.c0001,
-		 * R.drawable.c0002, R.drawable.c0010, R.drawable.c0011,
-		 * R.drawable.c0012, R.drawable.c0020, R.drawable.c0021,
-		 * R.drawable.c0022, R.drawable.c1000, R.drawable.c1001,
-		 * R.drawable.c1002, R.drawable.c1010, R.drawable.c1011,
-		 * R.drawable.c1012, R.drawable.c1020, R.drawable.c1021,
-		 * R.drawable.c1022 };
-		 */
 	}
 
 }

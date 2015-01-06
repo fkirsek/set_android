@@ -30,6 +30,10 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+        <activity
+            android:name=".MultiPlayActivity"
+            android:label="@string/title_activity_multi_play" >
+        </activity>
     </application>
 
 </manifest>

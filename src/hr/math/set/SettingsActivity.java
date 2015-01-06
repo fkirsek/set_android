@@ -7,29 +7,54 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 public class SettingsActivity extends Activity {
-	
+
 	private SharedPreferences prefs;
+	private SharedPreferences.Editor editor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		
-		prefs  = getSharedPreferences("SET", MODE_PRIVATE);
 
+		prefs = getSharedPreferences("SET", MODE_PRIVATE);
+		editor = prefs.edit();
+
+		/*
+		 * Reshuffle card deck settings.
+		 */
 		CheckBox shuffleCheck = (CheckBox) findViewById(R.id.shuffleCheck);
 		shuffleCheck.setChecked(prefs.getBoolean("cardDeckReshuffle", false));
 
 		shuffleCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				SharedPreferences.Editor editor = prefs.edit();
 				editor.putBoolean("cardDeckReshuffle", isChecked);
 				editor.commit();
 			}
 		});
+
+		/*
+		 * Number of players settings.
+		 */
+		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.rgNumPlayers);
+		int tmpNumPlayers = prefs.getInt("numPlayers", 2);
+		radioGroup.check(getResources().getIdentifier("radioPlayers" + tmpNumPlayers, "id",
+				"hr.math.set"));
+
+		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				int newNumPlayers = Integer.parseInt(((RadioButton) findViewById(checkedId)).getText().toString());
+				editor.putInt("numPlayers", newNumPlayers);
+				editor.commit();
+			}
+		});
+
 	}
 
 	@Override

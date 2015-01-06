@@ -1,7 +1,5 @@
 package hr.math.set.logic;
 
-import hr.math.set.SinglePlayActivity;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,7 +7,6 @@ import java.util.List;
 import java.util.Random;
 
 import android.util.Log;
-import android.widget.Toast;
 
 public class Table {
 
@@ -114,7 +111,8 @@ public class Table {
 	//takes an integer indicating what card was selected within the list of cards currently on the table
 	// a function that selects the card and checks if the cards selected make a set, need to be replaced, etc.
 	//most of the internal logic is here
-	public int selectCardAndCheck(int position){
+	public SetStatus selectCardAndCheck(int position){
+		// TODO provjeri ako sam nesto zabrljao
 		SetStatus status = instance.selectCard(position);
 		if (status == SetStatus.SET_OK) {
 			instance.removeSelected();
@@ -124,13 +122,13 @@ public class Table {
 			if (!instance.ensureSet()) {
 				instance.reset();
 				instance = null;
-				return GAME_DONE;
+				return SetStatus.GAME_DONE;
 			}
 			instance.clearSelection();
 		} else if (status == SetStatus.SET_FAIL) {
 			instance.clearSelection();
 		}
-		return GAME_NOT_DONE;
+		return status;
 	}
 
 	// Test only - removes set from table

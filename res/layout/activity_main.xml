@@ -28,7 +28,8 @@
         android:id="@+id/btnMultiplayer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/multiplayer" />
+        android:text="@string/multiplayer"
+        android:onClick="newMultiPlay" />
 
     <Button
         android:id="@+id/btnStats"
@@ -37,7 +38,7 @@
         android:text="@string/stats" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings"

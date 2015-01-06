@@ -75,6 +75,13 @@ public class MainActivity extends Activity {
 		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
 		this.startActivity(intent);
 	}
+	
+	public void newMultiPlay(View view) {
+		Intent intent = new Intent(MainActivity.this, MultiPlayActivity.class);
+		Table.getInstance().initializeTable();
+		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
+		this.startActivity(intent);		
+	}
 
 	public void settings(View view) {
 		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
