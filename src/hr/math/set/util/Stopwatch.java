@@ -16,9 +16,9 @@ public class Stopwatch {
 		elapsedTime = 0;
 		startTime = SystemClock.elapsedRealtime();
 	}
-	
-	//initializes just the startTime variable, used when the game is resumed
-	public void resume(){
+
+	// initializes just the startTime variable, used when the game is resumed
+	public void resume() {
 		startTime = SystemClock.elapsedRealtime();
 	}
 
@@ -44,8 +44,11 @@ public class Stopwatch {
 		elapsedTime = 0;
 	}
 
+	// update the elapsed time variable, and the start time variable
+	// the second is needed if it's only called to refresh the memory
 	public void pause() {
 		elapsedTime += SystemClock.elapsedRealtime() - startTime;
+		startTime = SystemClock.elapsedRealtime();
 	}
 
 }
