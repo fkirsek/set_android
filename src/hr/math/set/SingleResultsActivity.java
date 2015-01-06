@@ -35,7 +35,7 @@ public class SingleResultsActivity extends Activity {
 		lastScoreDeck = prefs.getString("lastScoreDeck", "99:99.999");  // it should never be 99:99.999
 		isHighScore = isNewHighScore(lastScoreDeck);
 
-		playerName.setText(prefs.getString("lastScoreDeckName", ""));
+		playerName.setText(prefs.getString("playerName", ""));
 		playerScore.setText(lastScoreDeck);
 
 		if (isHighScore) {
@@ -68,6 +68,7 @@ public class SingleResultsActivity extends Activity {
 		editor = prefs.edit();
 		editor.putString("lastScoreDeckName", enteredPlayerName);
 		editor.putString("lastScoreDeck", lastScoreDeck);
+		editor.putString("playerName", enteredPlayerName);
 		
 		if (isHighScore) {
 			editor.putString("highScoreDeckName", enteredPlayerName);

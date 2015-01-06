@@ -36,7 +36,7 @@ public class SettingsActivity extends Activity {
 		 * Player name.
 		 */
 		etPlayerName = (EditText) findViewById(R.id.etPlayerName);
-		etPlayerName.setText(prefs.getString("lastScoreDeckName", ""));
+		etPlayerName.setText(prefs.getString("playerName", ""));
 		
 		etPlayerName.setOnFocusChangeListener(new OnFocusChangeListener() {
 			// TODO ne radi bas ... (samo na enter i tab gubi focus)
@@ -47,7 +47,7 @@ public class SettingsActivity extends Activity {
 					 String tmpPlayerName = etPlayerName.getText().toString();
 					 if (tmpPlayerName.length() != 0) {
 						Toast.makeText(getBaseContext(), tmpPlayerName, Toast.LENGTH_SHORT).show();
-						 editor.putString("lastScoreDeckName", tmpPlayerName);
+						 editor.putString("playerName", tmpPlayerName);
 						 editor.commit();
 					 }					
 				} else {
