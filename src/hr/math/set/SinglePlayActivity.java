@@ -32,6 +32,15 @@ public class SinglePlayActivity extends Activity {
 		chronometer.stop();
 	}
 
+	protected void onResume(){
+		super.onResume();
+		// setting up the clock
+		stopwatch.resume();
+		chronometer = (Chronometer) findViewById(R.id.chronometer);
+		chronometer.setBase(stopwatch.getWhenToStart());
+		chronometer.start();
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,14 +48,7 @@ public class SinglePlayActivity extends Activity {
 
 		table = SinglePlayerObjects.table;
 		stopwatch = SinglePlayerObjects.stopwatch;
-		
-		table = table.getInstance();
 
-		// setting up the clock
-		stopwatch.init();
-		chronometer = (Chronometer) findViewById(R.id.chronometer);
-		chronometer.setBase(stopwatch.getWhenToStart());
-		chronometer.start();
 
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);

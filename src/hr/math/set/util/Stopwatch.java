@@ -15,7 +15,11 @@ public class Stopwatch {
 	public void init() {
 		elapsedTime = 0;
 		startTime = SystemClock.elapsedRealtime();
-
+	}
+	
+	//initializes just the startTime variable, used when the game is resumed
+	public void resume(){
+		startTime = SystemClock.elapsedRealtime();
 	}
 
 	// returns a "real" starting time, so that the penalty seconds, as well as
