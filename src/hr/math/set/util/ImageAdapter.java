@@ -13,9 +13,10 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter {
 
 	private Context mContext;
-	private Table table = Table.getInstance();
+	private Table table;
 
-	public ImageAdapter(Context c) {
+	public ImageAdapter(Context c, Table t) {
+		table = t;
 		mContext = c;
 	}
 

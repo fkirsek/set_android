@@ -50,7 +50,7 @@ public class SinglePlayActivity extends Activity {
 
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
-		adapter = new ImageAdapter(this);
+		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {

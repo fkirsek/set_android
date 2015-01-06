@@ -83,7 +83,21 @@ public class MainActivity extends Activity {
 
 		// - this should always be false for a multiplayer game
 		MultiPlayerObjects.init(prefs.getBoolean("cardDeckReshuffle", false),
-				getPreferences(MODE_PRIVATE).getInt("numPlayers", 2)); //the number of players in an ongoing multiplayer game shouldn't change if the preference is changed
+				getPreferences(MODE_PRIVATE).getInt("numPlayers", 2)); // the
+																		// number
+																		// of
+																		// players
+																		// in an
+																		// ongoing
+																		// multiplayer
+																		// game
+																		// shouldn't
+																		// change
+																		// if
+																		// the
+																		// preference
+																		// is
+																		// changed
 		this.startActivity(intent);
 	}
 

@@ -28,7 +28,6 @@ public class MultiPlayActivity extends Activity {
 		setContentView(R.layout.activity_multi_play);
 
 		table = MultiPlayerObjects.table;
-
 		numPlayers = MultiPlayerObjects.numPlayers;
 
 		if (numPlayers < 4) {
@@ -41,7 +40,7 @@ public class MultiPlayActivity extends Activity {
 		}
 
 		gridview = (GridView) findViewById(R.id.gridview);
-		adapter = new ImageAdapter(this);
+		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
