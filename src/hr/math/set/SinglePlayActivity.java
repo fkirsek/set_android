@@ -54,7 +54,7 @@ public class SinglePlayActivity extends Activity {
 		//setting up the clock
 		Stopwatch.init();
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
-		chronometer.setBase(SystemClock.elapsedRealtime() - Stopwatch.getElapsedTime() );
+		chronometer.setBase(Stopwatch.getWhenToStart() );
 		chronometer.start();
 
 		//setting up the grid view

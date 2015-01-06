@@ -49,12 +49,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/chronometer"
-        android:columnWidth="30dp"
-        android:gravity="center"
         android:horizontalSpacing="5dp"
         android:numColumns="3"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp" />
+        android:gravity="fill_horizontal|fill_vertical"
+        android:verticalSpacing="5dp"
+         />
 
 
 </RelativeLayout>
