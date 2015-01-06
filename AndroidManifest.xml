@@ -45,7 +45,12 @@
         </activity>
         <activity
             android:name=".SingleResultsActivity"
-            android:label="@string/title_activity_single_results" 
+            android:label="@string/title_activity_single_results"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".MultiResultsActivity"
+            android:label="@string/title_activity_multi_results" 
             android:theme="@android:style/Theme.Dialog" >
         </activity>
     </application>

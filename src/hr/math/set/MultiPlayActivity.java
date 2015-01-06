@@ -3,7 +3,11 @@ package hr.math.set;
 import hr.math.set.logic.SetStatus;
 import hr.math.set.logic.Table;
 import hr.math.set.util.ImageAdapter;
+
+import java.util.Arrays;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +25,7 @@ public class MultiPlayActivity extends Activity {
 	private ImageAdapter adapter;
 	private Table table;
 	private int playerOnMove;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class MultiPlayActivity extends Activity {
 
 				adapter.notifyDataSetChanged();
 				if (status == SetStatus.GAME_DONE) {
-					// endGame();
+					endGame();
 				} else if (status == SetStatus.SET_OK || status == SetStatus.SET_FAIL) {
 					int textViewId = getResources().getIdentifier("setsPlayer" + playerOnMove,
 							"id", "hr.math.set");
@@ -68,7 +73,6 @@ public class MultiPlayActivity extends Activity {
 			}
 		});
 
-
 		gridview.setEnabled(false);
 
 	}
@@ -77,6 +81,21 @@ public class MultiPlayActivity extends Activity {
 		playerOnMove = Integer.parseInt(v.getTag().toString());
 		Toast.makeText(this, v.getTag().toString(), Toast.LENGTH_SHORT).show();
 		gridview.setEnabled(true);
+	}
+
+	public void endGame() {
+
+		Intent resultAct = new Intent(this, MultiResultsActivity.class);
+		resultAct.putExtra("results", (String[]) Arrays.asList(
+				((TextView)findViewById(R.id.setsPlayer0)).getText().toString(),
+				((TextView)findViewById(R.id.setsPlayer1)).getText().toString(),
+				((TextView)findViewById(R.id.setsPlayer2)).getText().toString(),
+				((TextView)findViewById(R.id.setsPlayer3)).getText().toString()).toArray());
+		resultAct.putExtra("numPlayers", numPlayers);
+		startActivity(resultAct);
+
+		MultiPlayerObjects.clear();
+		finish();
 	}
 
 	@Override
@@ -94,6 +113,17 @@ public class MultiPlayActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	public void hint(View v) {
+		table.hint();
+		adapter.notifyDataSetChanged();
+	}
+	
+	public void set(View v) {
+		table.clearSelection();
+		table.set();
+		adapter.notifyDataSetChanged();
+	}
+	
 	public void clickTest(View v) {
 		Toast.makeText(this, "a", Toast.LENGTH_SHORT).show();
 	}

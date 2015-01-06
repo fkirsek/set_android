@@ -10,11 +10,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="hr.math.set.SettingsActivity" >
 
-    <CheckBox
-        android:id="@+id/shuffleCheck"
+<!--     player name -->
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_name" />
+
+    <EditText
+        android:id="@+id/etPlayerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName" >
+    </EditText>
+
+<!--     reshuffling -->
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reshuffling" />
+
+    <ToggleButton
+        android:id="@+id/tbReshuffling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+<!--     number of players -->
 
     <TextView
         android:id="@+id/textView1"
@@ -47,6 +73,5 @@
             android:layout_height="wrap_content"
             android:text="4" />
     </RadioGroup>
-
 
 </LinearLayout>
