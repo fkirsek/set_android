@@ -6,24 +6,29 @@ import java.util.Random;
 
 public class CardDeck {
 
-	private static CardDeck instance;
 	private Random rnd = new Random();
 	boolean reshuffle;
 
 	private List<Card> unshuffledCards = new ArrayList<Card>();
-	private List<Card> shuffeledCards = new ArrayList<Card>();
+	private List<Card> shuffledCards = new ArrayList<Card>();
 
-	private CardDeck() {
+	// a constructor if the reshuffle setting value wasn't provided
+	CardDeck() {
+		reshuffle = false;
 		initializeCardDeck();
 	}
 
-	public static CardDeck getInstance() {
-		if (instance == null) {
-			instance = new CardDeck();
-		}
-		return instance;
+	// and a constructor if it was
+	CardDeck(boolean reshuf) {
+		reshuffle = reshuf;
+		initializeCardDeck();
 	}
-		
+
+	// this method is unneeded and should be deleted in the next commit
+	public CardDeck getInstance() {
+		return this;
+	}
+
 	public void setReshuffle(boolean reshuffle) {
 		this.reshuffle = reshuffle;
 	}
@@ -33,35 +38,36 @@ public class CardDeck {
 			for (CardColor color : CardColor.values()) {
 				for (CardShape shape : CardShape.values()) {
 					for (CardShading shading : CardShading.values()) {
-						unshuffledCards.add(new Card(number, color, shape, shading));
+						unshuffledCards.add(new Card(number, color, shape,
+								shading));
 					}
 				}
 			}
 		}
 	}
-	
+
 	public void reset() {
-		unshuffledCards.addAll(shuffeledCards);
-		shuffeledCards.clear();
+		unshuffledCards.addAll(shuffledCards);
+		shuffledCards.clear();
 	}
 
-	public Card nextCard() {
+	public Card nextCard(Table table) {
 		if (unshuffledCards.isEmpty()) {
 			// TODO
 			if (reshuffle == false) {
 				return null;
 			}
 			reset();
-			for (int i = 0; i < Table.getInstance().size(); i++) {
-				shuffeledCards.add(Table.getInstance().get(i));
-				unshuffledCards.remove(Table.getInstance().get(i));
+			for (int i = 0; i < table.size(); i++) {
+				shuffledCards.add(table.get(i));
+				unshuffledCards.remove(table.get(i));
 			}
 		}
 		int rndIndex = rnd.nextInt(unshuffledCards.size());
 		Card rndCard = unshuffledCards.get(rndIndex);
-		shuffeledCards.add(rndCard);
+		shuffledCards.add(rndCard);
 		unshuffledCards.remove(rndIndex);
 		return rndCard;
-	}	
+	}
 
 }

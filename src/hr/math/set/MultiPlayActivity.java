@@ -27,9 +27,9 @@ public class MultiPlayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multi_play);
 
-		table = Table.getInstance();
+		table = MultiPlayerObjects.table;
 
-		numPlayers = getSharedPreferences("SET", MODE_PRIVATE).getInt("numPlayers", 2);
+		numPlayers = MultiPlayerObjects.numPlayers;
 
 		if (numPlayers < 4) {
 			findViewById(R.id.btnPlayer3).setVisibility(View.GONE);

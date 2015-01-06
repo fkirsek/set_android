@@ -24,8 +24,8 @@ public class MainActivity extends Activity {
 
 		button = (ImageButton) findViewById(R.id.imgButton);
 		button.setOnClickListener(imgButtonHandler);
-		
-		prefs = getSharedPreferences("SET", MODE_PRIVATE);
+
+		prefs = getPreferences(MODE_PRIVATE);
 	}
 
 	View.OnClickListener imgButtonHandler = new View.OnClickListener() {
@@ -33,16 +33,18 @@ public class MainActivity extends Activity {
 			button.setImageResource(R.drawable.ic_launcher);
 		}
 	};
-	
+
 	@Override
-    public void onResume() {
-            super.onResume();
-            if (Table.getInstance().size() == 0) {
-                    ((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.GONE);
-            } else {
-                    ((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.VISIBLE);                        
-            }
-    };
+	public void onResume() {
+		super.onResume();
+		if (SinglePlayerObjects.table == null) {
+			((Button) findViewById(R.id.btnResumeGame))
+					.setVisibility(View.GONE);
+		} else {
+			((Button) findViewById(R.id.btnResumeGame))
+					.setVisibility(View.VISIBLE);
+		}
+	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,22 +67,24 @@ public class MainActivity extends Activity {
 
 	public void newSinglePlay(View view) {
 		Intent intent = new Intent(MainActivity.this, SinglePlayActivity.class);
-		Table.getInstance().initializeTable();
-		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
+
+		// initialize a new game with the boolean value of set reshuffle
+		SinglePlayerObjects.init(prefs.getBoolean("cardDeckReshuffle", false));
 		this.startActivity(intent);
 	}
 
 	public void rsmSinglePlay(View view) {
 		Intent intent = new Intent(MainActivity.this, SinglePlayActivity.class);
-		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
 		this.startActivity(intent);
 	}
-	
+
 	public void newMultiPlay(View view) {
 		Intent intent = new Intent(MainActivity.this, MultiPlayActivity.class);
-		Table.getInstance().initializeTable();
-		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
-		this.startActivity(intent);		
+
+		// - this should always be false for a multiplayer game
+		MultiPlayerObjects.init(prefs.getBoolean("cardDeckReshuffle", false),
+				getPreferences(MODE_PRIVATE).getInt("numPlayers", 2)); //the number of players in an ongoing multiplayer game shouldn't change if the preference is changed
+		this.startActivity(intent);
 	}
 
 	public void settings(View view) {
