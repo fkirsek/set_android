@@ -34,6 +34,15 @@
             android:name=".MultiPlayActivity"
             android:label="@string/title_activity_multi_play" >
         </activity>
+        <activity
+            android:name=".NumPlayersActivity"
+            android:label="@string/title_activity_num_players"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".StatisticsActivity"
+            android:label="@string/title_activity_statistics" >
+        </activity>
     </application>
 
 </manifest>

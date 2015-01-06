@@ -16,14 +16,19 @@
     <string name="next_set">Next set</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_multi_play">MultiPlayActivity</string>
-    <string name="num_of_players">Number of players</string>    
+    <string name="num_of_players">Number of players</string>
     <string name="reshuffling">Card Deck Reshuffling</string>
-    
     <string name="num_players_prompt">Choose number of players</string>
+    <string name="highScoreDeck">High Score</string>
+    <string name="lastScoreDeck">Last Score</string>
+
     <string-array name="num_players">
         <item>2</item>
         <item>3</item>
         <item>4</item>
     </string-array>
+
+    <string name="title_activity_num_players">NumPlayersActivity</string>
+    <string name="title_activity_statistics">StatisticsActivity</string>
 
 </resources>

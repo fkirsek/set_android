@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 
 		button = (ImageButton) findViewById(R.id.imgButton);
 		button.setOnClickListener(imgButtonHandler);
-		
+
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 	}
 
@@ -33,16 +33,16 @@ public class MainActivity extends Activity {
 			button.setImageResource(R.drawable.ic_launcher);
 		}
 	};
-	
+
 	@Override
-    public void onResume() {
-            super.onResume();
-            if (Table.getInstance().size() == 0) {
-                    ((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.GONE);
-            } else {
-                    ((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.VISIBLE);                        
-            }
-    };
+	public void onResume() {
+		super.onResume();
+		if (Table.getInstance().size() == 0) {
+			((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.GONE);
+		} else {
+			((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.VISIBLE);
+		}
+	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,17 +75,40 @@ public class MainActivity extends Activity {
 		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
 		this.startActivity(intent);
 	}
-	
+
 	public void newMultiPlay(View view) {
-		Intent intent = new Intent(MainActivity.this, MultiPlayActivity.class);
-		Table.getInstance().initializeTable();
-		CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
-		this.startActivity(intent);		
+		Intent numPlayersIntent = new Intent(MainActivity.this, NumPlayersActivity.class);
+		this.startActivityForResult(numPlayersIntent, 1);
+
+		/*
+		 * Intent intent = new Intent(MainActivity.this,
+		 * MultiPlayActivity.class); Table.getInstance().initializeTable();
+		 * CardDeck
+		 * .getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle",
+		 * false)); this.startActivity(intent);
+		 */
 	}
 
 	public void settings(View view) {
 		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 		this.startActivity(intent);
+	}
+	
+	public void statistics(View view) {
+		Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
+		this.startActivity(intent);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1 && resultCode == RESULT_OK) {
+			if (resultCode == RESULT_OK) {
+				Intent intent = new Intent(MainActivity.this, MultiPlayActivity.class);
+				Table.getInstance().initializeTable();
+				CardDeck.getInstance().setReshuffle(prefs.getBoolean("cardDeckReshuffle", false));
+				this.startActivity(intent);
+			}
+		}
 	}
 
 }

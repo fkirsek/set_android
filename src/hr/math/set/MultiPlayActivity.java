@@ -32,11 +32,11 @@ public class MultiPlayActivity extends Activity {
 		numPlayers = getSharedPreferences("SET", MODE_PRIVATE).getInt("numPlayers", 2);
 
 		if (numPlayers < 4) {
-			findViewById(R.id.btnPlayer3).setVisibility(View.GONE);
+			findViewById(R.id.imageView3).setVisibility(View.GONE);
 			findViewById(R.id.setsPlayer3).setVisibility(View.GONE);
 		}
 		if (numPlayers < 3) {
-			findViewById(R.id.btnPlayer2).setVisibility(View.GONE);
+			findViewById(R.id.imageView2).setVisibility(View.GONE);
 			findViewById(R.id.setsPlayer2).setVisibility(View.GONE);
 		}
 
@@ -69,6 +69,7 @@ public class MultiPlayActivity extends Activity {
 			}
 		});
 
+
 		gridview.setEnabled(false);
 
 	}
@@ -92,6 +93,10 @@ public class MultiPlayActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void clickTest(View v) {
+		Toast.makeText(this, "a", Toast.LENGTH_SHORT).show();
 	}
 
 }

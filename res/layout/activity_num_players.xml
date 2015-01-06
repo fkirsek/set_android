@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout2"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,23 +8,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="hr.math.set.SettingsActivity" >
-
-    <CheckBox
-        android:id="@+id/shuffleCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/reshuffling" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/num_of_players" />
+    tools:context="hr.math.set.NumPlayersActivity" >
 
     <RadioGroup
         android:id="@+id/rgNumPlayers"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
@@ -32,6 +20,7 @@
             android:id="@+id/radioPlayers2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:checked="true"
             android:text="2" />
 
@@ -39,14 +28,36 @@
             android:id="@+id/radioPlayers3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="3" />
 
         <RadioButton
             android:id="@+id/radioPlayers4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="4" />
     </RadioGroup>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="clickOk"
+            android:text="OK" />
+
+        <Button
+            android:id="@+id/btnCncl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="clickCancel"
+            android:text="Cancel" />
+    </LinearLayout>
 
 </LinearLayout>
