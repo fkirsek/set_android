@@ -43,6 +43,11 @@
             android:name=".StatisticsActivity"
             android:label="@string/title_activity_statistics" >
         </activity>
+        <activity
+            android:name=".SingleResultsActivity"
+            android:label="@string/title_activity_single_results" 
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
     </application>
 
 </manifest>

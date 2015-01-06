@@ -4,7 +4,13 @@ import hr.math.set.logic.SetStatus;
 import hr.math.set.logic.Table;
 import hr.math.set.util.ImageAdapter;
 import hr.math.set.util.Stopwatch;
+
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,8 +27,10 @@ public class SinglePlayActivity extends Activity {
 	GridView gridview;
 	ImageAdapter adapter;
 	Chronometer chronometer;
-	
-	//these two objects are pulled from the SinglePlayerObjects class
+	private SharedPreferences prefs;
+	private SharedPreferences.Editor editor;
+
+	// these two objects are pulled from the SinglePlayerObjects class
 	Table table;
 	Stopwatch stopwatch;
 
@@ -32,7 +40,7 @@ public class SinglePlayActivity extends Activity {
 		chronometer.stop();
 	}
 
-	protected void onResume(){
+	protected void onResume() {
 		super.onResume();
 		// setting up the clock
 		stopwatch.resume();
@@ -40,15 +48,17 @@ public class SinglePlayActivity extends Activity {
 		chronometer.setBase(stopwatch.getWhenToStart());
 		chronometer.start();
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_single_play);
 
+		prefs = getSharedPreferences("SET", MODE_PRIVATE);
+		editor = prefs.edit();
+
 		table = SinglePlayerObjects.table;
 		stopwatch = SinglePlayerObjects.stopwatch;
-
 
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
@@ -70,8 +80,23 @@ public class SinglePlayActivity extends Activity {
 	}
 
 	public void endGame() {
-		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show(); 
-		SinglePlayerObjects.clear(); //clear the objects from the SinglePlayerObjects class
+		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show();
+		SinglePlayerObjects.clear(); // clear the objects from the
+										// SinglePlayerObjects class
+
+		long milisec = stopwatch.getElapsedTime();
+		String lastScore = String.format(Locale.getDefault(),
+				"%02d:%02d.%03d",
+				TimeUnit.MILLISECONDS.toMinutes(milisec),
+				TimeUnit.MILLISECONDS.toSeconds(milisec) % 60,
+				TimeUnit.MILLISECONDS.toMillis(milisec) % 1000);
+
+		editor.putString("lastScoreDeck", lastScore);
+		editor.commit();
+		
+		Intent resultAct = new Intent(this, SingleResultsActivity.class);
+		startActivity(resultAct);
+		
 		finish();
 	}
 
