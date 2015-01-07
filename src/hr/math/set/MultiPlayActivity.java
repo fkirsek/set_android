@@ -7,9 +7,7 @@ import hr.math.set.util.ImageAdapter;
 import java.util.Arrays;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
