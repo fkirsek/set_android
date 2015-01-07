@@ -69,5 +69,9 @@ public class CardDeck {
 		unshuffledCards.remove(rndIndex);
 		return rndCard;
 	}
+	
+	public boolean canDrawNext3() {
+		return unshuffledCards.size() >= 3;
+	}
 
 }

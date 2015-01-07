@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 public class StatisticsActivity extends Activity {
@@ -14,23 +16,25 @@ public class StatisticsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_statistics);
-		
+
+		getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
-		
+
 		String highScoreDeck = prefs.getString("highScoreDeck", "Nan");
 		((TextView) findViewById(R.id.tvHighScoreDeck)).setText(highScoreDeck);
-		
 
 		String highScoreDeckName = prefs.getString("highScoreDeckName", "NN");
 		((TextView) findViewById(R.id.tvHighScoreDeckName)).setText(highScoreDeckName);
-		
 
 		String lastScoreDeck = prefs.getString("lastScoreDeck", "Nan");
 		((TextView) findViewById(R.id.tvLastScoreDeck)).setText(lastScoreDeck);
-		
+
 		String lastScoreDeckName = prefs.getString("lastScoreDeckName", "NN");
-		((TextView) findViewById(R.id.tvLastScoreDeckName)).setText(lastScoreDeckName);	
+		((TextView) findViewById(R.id.tvLastScoreDeckName)).setText(lastScoreDeckName);
 
 	}
 

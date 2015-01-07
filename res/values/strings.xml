@@ -13,6 +13,7 @@
     <string name="exit">Exit</string>
     <string name="title_activity_single_play">Singleplayer</string>
     <string name="hint">Hint</string>
+    <string name="next_three">Draw 3</string>
     <string name="next_set">Next set</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_multi_play">Multiplayer</string>
