@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +29,9 @@ public class SingleResultsActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_single_results);
 
+		getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 
 		playerName = (EditText) findViewById(R.id.etPlayerName);
