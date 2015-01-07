@@ -159,6 +159,13 @@
             android:horizontalSpacing="5dp"
             android:numColumns="3"
             android:verticalSpacing="5dp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
     </LinearLayout>
 
     <Button
@@ -180,5 +187,14 @@
         android:onClick="set"
         android:layout_marginLeft="100dp"
         android:text="Set" />
+
+    <TextView
+        android:id="@+id/countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:text=""
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,13 +26,15 @@ public class MultiPlayActivity extends Activity {
 	private ImageAdapter adapter;
 	private Table table;
 	private int playerOnMove;
-	
+	private CountDownTimer countDownTimer = null;
+	TextView countDownTimerField = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multi_play);
 
+		countDownTimerField = (TextView) findViewById(R.id.countdown);
 		table = MultiPlayerObjects.table;
 		numPlayers = MultiPlayerObjects.numPlayers;
 
@@ -49,24 +52,21 @@ public class MultiPlayActivity extends Activity {
 		gridview.setAdapter(adapter);
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
 				SetStatus status = table.selectCardAndCheck(position);
 
 				adapter.notifyDataSetChanged();
 				if (status == SetStatus.GAME_DONE) {
 					endGame();
-				} else if (status == SetStatus.SET_OK || status == SetStatus.SET_FAIL) {
-					int textViewId = getResources().getIdentifier("setsPlayer" + playerOnMove,
-							"id", "hr.math.set");
-					TextView setsPlayer = (TextView) findViewById(textViewId);
+				} else if (status == SetStatus.SET_OK
+						|| status == SetStatus.SET_FAIL) {
 
-					int tmpNumSets = Integer.parseInt(setsPlayer.getText().toString());
+					countDownTimerField.setVisibility(View.INVISIBLE);
+					countDownTimer.cancel(); // stop the countdowntimer and make
+												// the timer invisible
 
-					if (status == SetStatus.SET_OK) {
-						setsPlayer.setText(String.valueOf(tmpNumSets + 1));
-					} else {
-						setsPlayer.setText(String.valueOf(tmpNumSets - 1));
-					}
+					processPlayerSelection(status);
 
 					gridview.setEnabled(false);
 				}
@@ -77,20 +77,58 @@ public class MultiPlayActivity extends Activity {
 
 	}
 
+	// a new function that processes the result of the selection the player made
+	// also used to automatically fail a player when the time runs outs
+	public void processPlayerSelection(SetStatus status) {
+		int textViewId = getResources().getIdentifier(
+				"setsPlayer" + playerOnMove, "id", "hr.math.set");
+		TextView setsPlayer = (TextView) findViewById(textViewId);
+
+		int tmpNumSets = Integer.parseInt(setsPlayer.getText().toString());
+
+		if (status == SetStatus.SET_OK) {
+			setsPlayer.setText(String.valueOf(tmpNumSets + 1));
+		} else {
+			setsPlayer.setText(String.valueOf(tmpNumSets - 1));
+		}
+	}
+
 	public void playerMove(View v) {
 		playerOnMove = Integer.parseInt(v.getTag().toString());
 		Toast.makeText(this, v.getTag().toString(), Toast.LENGTH_SHORT).show();
 		gridview.setEnabled(true);
+
+		countDownTimerField.setVisibility(View.VISIBLE);
+		countDownTimerField.setText("10");
+		// countdown timer
+		countDownTimer = new CountDownTimer(10000, 1000) {
+
+			public void onTick(long millisUntilFinished) {
+				countDownTimerField.setText("" + millisUntilFinished / 1000);
+			}
+
+			public void onFinish() {
+				countDownTimerField.setVisibility(View.INVISIBLE);
+				processPlayerSelection(SetStatus.SET_FAIL); //fail the player for running out of time
+			}
+		}.start();
+
 	}
 
 	public void endGame() {
 
 		Intent resultAct = new Intent(this, MultiResultsActivity.class);
-		resultAct.putExtra("results", (String[]) Arrays.asList(
-				((TextView)findViewById(R.id.setsPlayer0)).getText().toString(),
-				((TextView)findViewById(R.id.setsPlayer1)).getText().toString(),
-				((TextView)findViewById(R.id.setsPlayer2)).getText().toString(),
-				((TextView)findViewById(R.id.setsPlayer3)).getText().toString()).toArray());
+		resultAct.putExtra(
+				"results",
+				(String[]) Arrays.asList(
+						((TextView) findViewById(R.id.setsPlayer0)).getText()
+								.toString(),
+						((TextView) findViewById(R.id.setsPlayer1)).getText()
+								.toString(),
+						((TextView) findViewById(R.id.setsPlayer2)).getText()
+								.toString(),
+						((TextView) findViewById(R.id.setsPlayer3)).getText()
+								.toString()).toArray());
 		resultAct.putExtra("numPlayers", numPlayers);
 		startActivity(resultAct);
 
@@ -117,13 +155,13 @@ public class MultiPlayActivity extends Activity {
 		table.hint();
 		adapter.notifyDataSetChanged();
 	}
-	
+
 	public void set(View v) {
 		table.clearSelection();
 		table.set();
 		adapter.notifyDataSetChanged();
 	}
-	
+
 	public void clickTest(View v) {
 		Toast.makeText(this, "a", Toast.LENGTH_SHORT).show();
 	}
