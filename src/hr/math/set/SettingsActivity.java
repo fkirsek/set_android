@@ -19,10 +19,11 @@ public class SettingsActivity extends Activity {
 
 	private SharedPreferences prefs;
 	private SharedPreferences.Editor editor;
-	
+
 	private EditText etPlayerName;
 	private ToggleButton toggleButton;
 	private RadioGroup radioGroup;
+	private EditText numberPicker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,27 +32,30 @@ public class SettingsActivity extends Activity {
 
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 		editor = prefs.edit();
-		
+
 		/*
 		 * Player name.
 		 */
 		etPlayerName = (EditText) findViewById(R.id.etPlayerName);
 		etPlayerName.setText(prefs.getString("playerName", ""));
-		
+
 		etPlayerName.setOnFocusChangeListener(new OnFocusChangeListener() {
 			// TODO ne radi bas ... (samo na enter i tab gubi focus)
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
-					Toast.makeText(getBaseContext(), "no focus", Toast.LENGTH_SHORT).show();
-					 String tmpPlayerName = etPlayerName.getText().toString();
-					 if (tmpPlayerName.length() != 0) {
-						Toast.makeText(getBaseContext(), tmpPlayerName, Toast.LENGTH_SHORT).show();
-						 editor.putString("playerName", tmpPlayerName);
-						 editor.commit();
-					 }					
+					Toast.makeText(getBaseContext(), "no focus",
+							Toast.LENGTH_SHORT).show();
+					String tmpPlayerName = etPlayerName.getText().toString();
+					if (tmpPlayerName.length() != 0) {
+						Toast.makeText(getBaseContext(), tmpPlayerName,
+								Toast.LENGTH_SHORT).show();
+						editor.putString("playerName", tmpPlayerName);
+						editor.commit();
+					}
 				} else {
-					Toast.makeText(getBaseContext(), "focus", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getBaseContext(), "focus",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -61,33 +65,65 @@ public class SettingsActivity extends Activity {
 		 */
 		toggleButton = (ToggleButton) findViewById(R.id.tbReshuffling);
 		toggleButton.setChecked(prefs.getBoolean("cardDeckReshuffle", false));
-		
-		toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				editor.putBoolean("cardDeckReshuffle", isChecked);
-				editor.commit();
-			}
-		});
-		
+
+		toggleButton
+				.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+						editor.putBoolean("cardDeckReshuffle", isChecked);
+						editor.commit();
+					}
+				});
+
 		/*
 		 * Number of players settings.
 		 */
 		radioGroup = (RadioGroup) findViewById(R.id.rgNumPlayers);
 		int tmpNumPlayers = prefs.getInt("numPlayers", 2);
-		radioGroup.check(getResources().getIdentifier("radioPlayers" + tmpNumPlayers, "id",
-				"hr.math.set"));
+		radioGroup.check(getResources().getIdentifier(
+				"radioPlayers" + tmpNumPlayers, "id", "hr.math.set"));
 
 		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				int newNumPlayers = Integer.parseInt(((RadioButton) findViewById(checkedId)).getText().toString());
+				int newNumPlayers = Integer
+						.parseInt(((RadioButton) findViewById(checkedId))
+								.getText().toString());
 				editor.putInt("numPlayers", newNumPlayers);
 				editor.commit();
-				Toast.makeText(getBaseContext(), String.valueOf(prefs.getInt("numPlayers", -100)), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getBaseContext(),
+						String.valueOf(prefs.getInt("numPlayers", -100)),
+						Toast.LENGTH_SHORT).show();
 			}
 		});
+
+		/*
+		 * Timeout length settings
+		 */
+		
+		numberPicker = (EditText) findViewById(R.id.etTimeoutLength);
+		int tempTimeout = prefs.getInt("timeoutSeconds", 10);
+		numberPicker.setText(tempTimeout + "" );
+		numberPicker.setOnFocusChangeListener(new OnFocusChangeListener() {
+			// TODO ne radi bas ... (samo na enter i tab gubi focus)
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus) {
+					String tempTimeoutStr = numberPicker.getText().toString();
+					if (tempTimeoutStr.length() != 0) {
+						Toast.makeText(getBaseContext(), tempTimeoutStr,
+								Toast.LENGTH_SHORT).show();
+						editor.putInt("timeoutSeconds", Integer
+								.parseInt(tempTimeoutStr));
+						editor.commit();
+					}
+				} 
+			}
+		});
+		
+		
 
 	}
 

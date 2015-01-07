@@ -34,5 +34,6 @@
     <string name="title_activity_statistics">StatisticsActivity</string>
     <string name="title_activity_single_results">SingleResultsActivity</string>
     <string name="title_activity_multi_results">MultiResultsActivity</string>
+    <string name="timeout">Timeout length (in seconds)</string>
 
 </resources>

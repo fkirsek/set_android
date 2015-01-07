@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
 			if (resultCode == RESULT_OK) {
 				Intent intent = new Intent(MainActivity.this, MultiPlayActivity.class);
 				MultiPlayerObjects.init(prefs.getBoolean("cardDeckReshuffle", false),
-						prefs.getInt("numPlayers", 2));
+						prefs.getInt("numPlayers", 2), prefs.getInt("timeoutSeconds", 10));
 				this.startActivity(intent);
 			}
 		}

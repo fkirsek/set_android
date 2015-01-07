@@ -28,6 +28,7 @@ public class MultiPlayActivity extends Activity {
 	private Table table;
 	private int playerOnMove;
 	private int[] scores;
+	private int timeout;
 
 	private int[] playerId = new int[] { R.id.player0, R.id.player1, R.id.player2, R.id.player3 };
 	private int[] lightColorId = new int[] { R.color.lightBlue, R.color.lightRed,
@@ -50,6 +51,7 @@ public class MultiPlayActivity extends Activity {
 		table = MultiPlayerObjects.table;
 		numPlayers = MultiPlayerObjects.numPlayers;
 		scores = MultiPlayerObjects.scores;
+		timeout = MultiPlayerObjects.timeout;
 
 		// update the player scores
 		for (int i = 0; i < 4; i++) {
@@ -126,7 +128,7 @@ public class MultiPlayActivity extends Activity {
 		countDownTimerField.setVisibility(View.VISIBLE);
 		countDownTimerField.setText("10");
 		// countdown timer
-		countDownTimer = new CountDownTimer(10000, 1000) {
+		countDownTimer = new CountDownTimer(timeout, 1000) {
 			public void onTick(long millisUntilFinished) {
 				countDownTimerField.setText("" + millisUntilFinished / 1000);
 			}
@@ -135,11 +137,9 @@ public class MultiPlayActivity extends Activity {
 				countDownTimerField.setVisibility(View.INVISIBLE); // TODO mozda
 																	// ubaciti u
 																	// processPlayerSelection
-				gridview.setEnabled(false); // disable the grid TODO visak ?
 				processPlayerSelection(SetStatus.SET_FAIL); // fail the player
 															// for running out
 															// of time
-				table.clearSelection(); // TODO visak?
 			}
 		}.start();
 	}

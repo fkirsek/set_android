@@ -8,16 +8,18 @@ public class MultiPlayerObjects {
 	static Table table = null;
 	static int numPlayers = 2;
 	static int[] scores = null;
+	static int timeout = 10;
 	
 	// private constructor to deny initializing an object of this type
 	private MultiPlayerObjects() {
 	}
 
 	// creates new instances of table and number of players
-	public static void init(boolean reshuf, int nPl) {
+	public static void init(boolean reshuf, int nPl, int timeoutSeconds) {
 		numPlayers = nPl;
 		table = new Table(reshuf);
 		scores = new int[4];
+		timeout = 1000*timeoutSeconds;
 	}
 
 	// clears the initialized objects, happens when the single player game ends

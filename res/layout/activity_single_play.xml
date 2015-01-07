@@ -51,8 +51,9 @@
         android:layout_below="@id/chronometer"
         android:layout_centerHorizontal="true"
         android:gravity="fill_horizontal|fill_vertical"
-        android:horizontalSpacing="5dp"
-        android:numColumns="3"
-        android:verticalSpacing="5dp" />
+        android:horizontalSpacing="1dp"
+        android:numColumns="auto_fit"
+        android:columnWidth="@dimen/grid_column_width"
+        android:verticalSpacing="1dp" />
 
 </RelativeLayout>
