@@ -122,13 +122,13 @@ public class MultiPlayActivity extends Activity {
 
 		((ImageView) findViewById(playerImageViewId[playerOnMove]))
 				.setImageResource(defaultImageId[playerOnMove]);
-		table.clearSelection();
-		gridview.setEnabled(false);
+		table.clearSelection(); // TODO visak ??
+		gridview.setEnabled(false); // TODO visak ??
 	}
 
 	public void playerMove(View v) {
 		playerOnMove = Integer.parseInt(v.getTag().toString());
-		Toast.makeText(this, v.getTag().toString(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, v.getTag().toString(), Toast.LENGTH_SHORT).show();
 		gridview.setEnabled(true);
 
 		((ImageView) findViewById(playerImageViewId[playerOnMove]))
@@ -145,9 +145,9 @@ public class MultiPlayActivity extends Activity {
 
 			public void onFinish() {
 				countDownTimerField.setVisibility(View.INVISIBLE);
-				processPlayerSelection(SetStatus.SET_FAIL); // fail the player
-															// for running out
-															// of time
+				gridview.setEnabled(false); //disable the grid
+				processPlayerSelection(SetStatus.SET_FAIL); //fail the player for running out of time
+				table.clearSelection();
 			}
 		}.start();
 
