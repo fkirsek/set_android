@@ -12,14 +12,13 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +31,11 @@ public class MultiPlayActivity extends Activity {
 	private int playerOnMove;
 	private int[] scores;
 
-	private int[] playerImageViewId = new int[] { R.id.imageView0, R.id.imageView1,
-			R.id.imageView2, R.id.imageView3 };
-	private int[] defaultImageId = new int[] { R.drawable.blue_shadow, R.drawable.red_shadow,
-			R.drawable.green_shadow, R.drawable.yellow_shadow };
-	private int[] onMoveImageId = new int[] { R.drawable.blue_on_move, R.drawable.red_on_move,
-			R.drawable.green_on_move, R.drawable.yellow_on_move };
+	private int[] playerId = new int[] { R.id.player0, R.id.player1, R.id.player2, R.id.player3 };
+	private int[] lightColorId = new int[] { R.color.lightBlue, R.color.lightRed,
+			R.color.lightGreen, R.color.lightYellow };
+	private int[] darkColorId = new int[] { R.color.darkBlue, R.color.darkRed, R.color.darkGreen,
+			R.color.darkYellow };
 
 	private CountDownTimer countDownTimer = null;
 	TextView countDownTimerField = null;
@@ -67,18 +65,18 @@ public class MultiPlayActivity extends Activity {
 		}
 
 		if (numPlayers < 4) {
-			findViewById(R.id.imageView3).setVisibility(View.GONE);
+			findViewById(playerId[3]).setVisibility(View.GONE);
 			findViewById(R.id.setsPlayer3).setVisibility(View.GONE);
 		}
 		if (numPlayers < 3) {
-			findViewById(R.id.imageView2).setVisibility(View.GONE);
+			findViewById(playerId[2]).setVisibility(View.GONE);
 			findViewById(R.id.setsPlayer2).setVisibility(View.GONE);
 		}
 
 		gridview = (GridView) findViewById(R.id.gridview);
 		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
-		
+
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				SetStatus status = table.selectCardAndCheck(position);
@@ -87,11 +85,9 @@ public class MultiPlayActivity extends Activity {
 				if (status == SetStatus.GAME_DONE) {
 					endGame();
 				} else if (status == SetStatus.SET_OK || status == SetStatus.SET_FAIL) {
-
 					countDownTimerField.setVisibility(View.INVISIBLE);
 					countDownTimer.cancel(); // stop the countdowntimer and make
 												// the timer invisible
-
 					processPlayerSelection(status);
 				}
 			}
@@ -120,19 +116,18 @@ public class MultiPlayActivity extends Activity {
 
 		updateScoreDisplay();
 
-		((ImageView) findViewById(playerImageViewId[playerOnMove]))
-				.setImageResource(defaultImageId[playerOnMove]);
-		table.clearSelection(); // TODO visak ??
-		gridview.setEnabled(false); // TODO visak ??
+		((LinearLayout) findViewById(playerId[playerOnMove]))
+				.setBackgroundColor(getResources().getColor(lightColorId[playerOnMove]));
+		table.clearSelection();
+		gridview.setEnabled(false);
 	}
 
 	public void playerMove(View v) {
 		playerOnMove = Integer.parseInt(v.getTag().toString());
-		//Toast.makeText(this, v.getTag().toString(), Toast.LENGTH_SHORT).show();
 		gridview.setEnabled(true);
 
-		((ImageView) findViewById(playerImageViewId[playerOnMove]))
-				.setImageResource(onMoveImageId[playerOnMove]);
+		((LinearLayout) findViewById(playerId[playerOnMove]))
+		.setBackgroundColor(getResources().getColor(darkColorId[playerOnMove]));
 
 		countDownTimerField.setVisibility(View.VISIBLE);
 		countDownTimerField.setText("10");
@@ -145,8 +140,10 @@ public class MultiPlayActivity extends Activity {
 
 			public void onFinish() {
 				countDownTimerField.setVisibility(View.INVISIBLE);
-				gridview.setEnabled(false); //disable the grid
-				processPlayerSelection(SetStatus.SET_FAIL); //fail the player for running out of time
+				gridview.setEnabled(false); // disable the grid
+				processPlayerSelection(SetStatus.SET_FAIL); // fail the player
+															// for running out
+															// of time
 				table.clearSelection();
 			}
 		}.start();
@@ -171,7 +168,7 @@ public class MultiPlayActivity extends Activity {
 		MultiPlayerObjects.clear();
 		finish();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.multi_play, menu);

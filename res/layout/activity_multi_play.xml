@@ -6,117 +6,108 @@
 
     <!-- upper left | red | player1 -->
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="50dp"
+    <LinearLayout
+        android:id="@+id/player0"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/lightBlue"
         android:clickable="true"
         android:onClick="playerMove"
-        android:src="@drawable/red_shadow"
-        android:tag="1" />
+        android:orientation="horizontal"
+        android:tag="0" />
 
-    <TextView
-        android:id="@+id/setsPlayer1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:text="0" />
-
-    <!-- upper right | green | player2 -->
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentUp="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:clickable="true"
-        android:onClick="playerMove"
-        android:src="@drawable/green_shadow"
-        android:tag="2" />
-
-    <TextView
-        android:id="@+id/setsPlayer2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentUp="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="0" />
-
-    <!-- bottom right | blue | player0 -->
-
-    <ImageView
-        android:id="@+id/imageView0"
-        android:layout_width="50dp"
+    <LinearLayout
+        android:id="@+id/player1"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/lightRed"
         android:clickable="true"
         android:onClick="playerMove"
-        android:src="@drawable/blue_shadow"
-        android:tag="0" />
+        android:orientation="horizontal"
+        android:tag="1" />
+
+    <LinearLayout
+        android:id="@+id/player2"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/player0"
+        android:layout_marginBottom="50dp"
+        android:background="@color/lightGreen"
+        android:clickable="true"
+        android:onClick="playerMove"
+        android:orientation="horizontal"
+        android:tag="2" />
+
+    <LinearLayout
+        android:id="@+id/player3"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/player0"
+        android:layout_marginBottom="50dp"
+        android:background="@color/lightYellow"
+        android:clickable="true"
+        android:onClick="playerMove"
+        android:orientation="horizontal"
+        android:tag="3" />
 
     <TextView
         android:id="@+id/setsPlayer0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
         android:text="0" />
 
-    <!-- bottom left | yellow | player3 -->
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <TextView
+        android:id="@+id/setsPlayer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:text="0" />
+
+    <TextView
+        android:id="@+id/setsPlayer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:clickable="true"
-        android:onClick="playerMove"
-        android:src="@drawable/yellow_shadow"
-        android:tag="3" />
+        android:layout_centerInParent="true"
+        android:text="0" />
 
     <TextView
         android:id="@+id/setsPlayer3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
         android:text="0" />
 
-    <LinearLayout
-        android:id="@+id/RelativeLayout1"
+    <GridView
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="50dp"
+        android:gravity="fill_horizontal|fill_vertical"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:verticalSpacing="5dp" />
 
-        <GridView
-            android:id="@+id/gridview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="50dp"
-            android:gravity="fill_horizontal|fill_vertical"
-            android:horizontalSpacing="5dp"
-            android:numColumns="3"
-            android:verticalSpacing="5dp" />
-    </LinearLayout>
-
-    <Button
+    <!-- Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -135,13 +126,13 @@
         android:layout_alignLeft="@+id/button1"
         android:layout_marginLeft="100dp"
         android:onClick="set"
-        android:text="Set" />
+        android:text="Set" /-->
 
     <TextView
         android:id="@+id/countdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView2"
+        android:layout_below="@+id/player0"
         android:layout_centerHorizontal="true"
         android:text=""
         android:visibility="invisible" />
