@@ -3,6 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/table"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -35,26 +36,23 @@
         android:layout_toRightOf="@id/nextSetBtn"
         android:onClick="hint"
         android:text="@string/hint" />
-    
+
     <Chronometer
         android:id="@+id/chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnHint"
-        android:layout_centerHorizontal="true"
-        />
-    
+        android:layout_centerHorizontal="true" />
+
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/chronometer"
+        android:layout_centerHorizontal="true"
+        android:gravity="fill_horizontal|fill_vertical"
         android:horizontalSpacing="5dp"
         android:numColumns="3"
-        android:gravity="fill_horizontal|fill_vertical"
-        android:verticalSpacing="5dp"
-        android:layout_centerHorizontal="true"
-         />
-
+        android:verticalSpacing="5dp" />
 
 </RelativeLayout>

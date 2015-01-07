@@ -13,8 +13,6 @@ import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -43,11 +41,6 @@ public class MultiPlayActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 		setContentView(R.layout.activity_multi_play);
 
 		// a variable that memorizes the location of the countdown timer
@@ -94,7 +87,6 @@ public class MultiPlayActivity extends Activity {
 		});
 
 		gridview.setEnabled(false);
-
 	}
 
 	// updates the score of the player that was last playing
@@ -113,45 +105,52 @@ public class MultiPlayActivity extends Activity {
 		} else {
 			scores[playerOnMove]--;
 		}
-
 		updateScoreDisplay();
 
-		((LinearLayout) findViewById(playerId[playerOnMove]))
-				.setBackgroundColor(getResources().getColor(lightColorId[playerOnMove]));
+		((LinearLayout) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
+				.getColor(darkColorId[playerOnMove]));
 		table.clearSelection();
 		gridview.setEnabled(false);
+		setClickableMultiplayerButtons(true);
 	}
 
 	public void playerMove(View v) {
 		playerOnMove = Integer.parseInt(v.getTag().toString());
 		gridview.setEnabled(true);
 
-		((LinearLayout) findViewById(playerId[playerOnMove]))
-		.setBackgroundColor(getResources().getColor(darkColorId[playerOnMove]));
+		setClickableMultiplayerButtons(false);
+
+		((LinearLayout) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
+				.getColor(lightColorId[playerOnMove]));
 
 		countDownTimerField.setVisibility(View.VISIBLE);
 		countDownTimerField.setText("10");
 		// countdown timer
 		countDownTimer = new CountDownTimer(10000, 1000) {
-
 			public void onTick(long millisUntilFinished) {
 				countDownTimerField.setText("" + millisUntilFinished / 1000);
 			}
 
 			public void onFinish() {
-				countDownTimerField.setVisibility(View.INVISIBLE);
-				gridview.setEnabled(false); // disable the grid
+				countDownTimerField.setVisibility(View.INVISIBLE); // TODO mozda
+																	// ubaciti u
+																	// processPlayerSelection
+				gridview.setEnabled(false); // disable the grid TODO visak ?
 				processPlayerSelection(SetStatus.SET_FAIL); // fail the player
 															// for running out
 															// of time
-				table.clearSelection();
+				table.clearSelection(); // TODO visak?
 			}
 		}.start();
+	}
 
+	private void setClickableMultiplayerButtons(boolean clickable) {
+		for (int i = 0; i < numPlayers; i++) {
+			((LinearLayout) findViewById(playerId[i])).setClickable(clickable);
+		}
 	}
 
 	public void endGame() {
-
 		Intent resultAct = new Intent(this, MultiResultsActivity.class);
 		resultAct
 				.putExtra(
