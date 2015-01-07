@@ -12,10 +12,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,29 +31,41 @@ public class MultiPlayActivity extends Activity {
 	private Table table;
 	private int playerOnMove;
 	private int[] scores;
-	
+
+	private int[] playerImageViewId = new int[] { R.id.imageView0, R.id.imageView1,
+			R.id.imageView2, R.id.imageView3 };
+	private int[] defaultImageId = new int[] { R.drawable.blue_shadow, R.drawable.red_shadow,
+			R.drawable.green_shadow, R.drawable.yellow_shadow };
+	private int[] onMoveImageId = new int[] { R.drawable.blue_on_move, R.drawable.red_on_move,
+			R.drawable.green_on_move, R.drawable.yellow_on_move };
+
 	private CountDownTimer countDownTimer = null;
 	TextView countDownTimerField = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 		setContentView(R.layout.activity_multi_play);
 
-		//a variable that memorizes the location of the countdown timer
+		// a variable that memorizes the location of the countdown timer
 		countDownTimerField = (TextView) findViewById(R.id.countdown);
-		
-		//reading variables from MultiPlayerObjects
+
+		// reading variables from MultiPlayerObjects
 		table = MultiPlayerObjects.table;
 		numPlayers = MultiPlayerObjects.numPlayers;
 		scores = MultiPlayerObjects.scores;
-		
-		//update the player scores
-		for(int i = 0; i < 4; i++){
+
+		// update the player scores
+		for (int i = 0; i < 4; i++) {
 			playerOnMove = i;
 			updateScoreDisplay();
 		}
-		
+
 		if (numPlayers < 4) {
 			findViewById(R.id.imageView3).setVisibility(View.GONE);
 			findViewById(R.id.setsPlayer3).setVisibility(View.GONE);
@@ -62,24 +78,21 @@ public class MultiPlayActivity extends Activity {
 		gridview = (GridView) findViewById(R.id.gridview);
 		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
-
+		
 		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				SetStatus status = table.selectCardAndCheck(position);
 
 				adapter.notifyDataSetChanged();
 				if (status == SetStatus.GAME_DONE) {
 					endGame();
-				} else if (status == SetStatus.SET_OK
-						|| status == SetStatus.SET_FAIL) {
+				} else if (status == SetStatus.SET_OK || status == SetStatus.SET_FAIL) {
 
 					countDownTimerField.setVisibility(View.INVISIBLE);
 					countDownTimer.cancel(); // stop the countdowntimer and make
 												// the timer invisible
 
 					processPlayerSelection(status);
-					gridview.setEnabled(false);
 				}
 			}
 		});
@@ -87,10 +100,11 @@ public class MultiPlayActivity extends Activity {
 		gridview.setEnabled(false);
 
 	}
+
 	// updates the score of the player that was last playing
-	private void updateScoreDisplay(){
-		int textViewId = getResources().getIdentifier(
-				"setsPlayer" + playerOnMove, "id", "hr.math.set");
+	private void updateScoreDisplay() {
+		int textViewId = getResources().getIdentifier("setsPlayer" + playerOnMove, "id",
+				"hr.math.set");
 		TextView setsPlayer = (TextView) findViewById(textViewId);
 		setsPlayer.setText(String.valueOf(scores[playerOnMove]));
 	}
@@ -103,13 +117,22 @@ public class MultiPlayActivity extends Activity {
 		} else {
 			scores[playerOnMove]--;
 		}
+
 		updateScoreDisplay();
+
+		((ImageView) findViewById(playerImageViewId[playerOnMove]))
+				.setImageResource(defaultImageId[playerOnMove]);
+		table.clearSelection();
+		gridview.setEnabled(false);
 	}
 
 	public void playerMove(View v) {
 		playerOnMove = Integer.parseInt(v.getTag().toString());
 		Toast.makeText(this, v.getTag().toString(), Toast.LENGTH_SHORT).show();
 		gridview.setEnabled(true);
+
+		((ImageView) findViewById(playerImageViewId[playerOnMove]))
+				.setImageResource(onMoveImageId[playerOnMove]);
 
 		countDownTimerField.setVisibility(View.VISIBLE);
 		countDownTimerField.setText("10");
@@ -122,7 +145,9 @@ public class MultiPlayActivity extends Activity {
 
 			public void onFinish() {
 				countDownTimerField.setVisibility(View.INVISIBLE);
-				processPlayerSelection(SetStatus.SET_FAIL); //fail the player for running out of time
+				processPlayerSelection(SetStatus.SET_FAIL); // fail the player
+															// for running out
+															// of time
 			}
 		}.start();
 
@@ -131,24 +156,22 @@ public class MultiPlayActivity extends Activity {
 	public void endGame() {
 
 		Intent resultAct = new Intent(this, MultiResultsActivity.class);
-		resultAct.putExtra(
-				"results",
-				(String[]) Arrays.asList(
-						((TextView) findViewById(R.id.setsPlayer0)).getText()
-								.toString(),
-						((TextView) findViewById(R.id.setsPlayer1)).getText()
-								.toString(),
-						((TextView) findViewById(R.id.setsPlayer2)).getText()
-								.toString(),
-						((TextView) findViewById(R.id.setsPlayer3)).getText()
-								.toString()).toArray());
+		resultAct
+				.putExtra(
+						"results",
+						(String[]) Arrays.asList(
+								((TextView) findViewById(R.id.setsPlayer0)).getText().toString(),
+								((TextView) findViewById(R.id.setsPlayer1)).getText().toString(),
+								((TextView) findViewById(R.id.setsPlayer2)).getText().toString(),
+								((TextView) findViewById(R.id.setsPlayer3)).getText().toString())
+								.toArray());
 		resultAct.putExtra("numPlayers", numPlayers);
 		startActivity(resultAct);
 
 		MultiPlayerObjects.clear();
 		finish();
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.multi_play, menu);
