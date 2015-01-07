@@ -39,6 +39,7 @@
             android:name=".MultiPlayActivity"
             android:label="@string/title_activity_multi_play" 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+
         </activity>
         <activity
             android:name=".NumPlayersActivity"
@@ -57,7 +58,7 @@
         </activity>
         <activity
             android:name=".MultiResultsActivity"
-            android:label="@string/title_activity_multi_results" 
+            android:label="@string/title_activity_multi_results"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
     </application>

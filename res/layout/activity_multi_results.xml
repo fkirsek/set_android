@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/blue" />
+            android:src="@drawable/blue_square" />
 
         <TextView
             android:id="@+id/tvSetsPlayer0"
@@ -35,7 +35,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/green" />
+            android:src="@drawable/red_square" />
 
         <TextView
             android:id="@+id/tvSetsPlayer1"
@@ -53,7 +53,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/red" />
+            android:src="@drawable/green_square" />
 
         <TextView
             android:id="@+id/tvSetsPlayer2"
@@ -71,7 +71,7 @@
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/yellow" />
+            android:src="@drawable/yellow_square" />
 
         <TextView
             android:id="@+id/tvSetsPlayer3"
