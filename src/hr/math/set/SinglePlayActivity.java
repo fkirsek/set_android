@@ -66,7 +66,8 @@ public class SinglePlayActivity extends Activity {
 		gridview.setAdapter(adapter);
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
 
 				SetStatus status = table.selectCardAndCheck(position);
 
@@ -80,23 +81,23 @@ public class SinglePlayActivity extends Activity {
 	}
 
 	public void endGame() {
-		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show();
+		Toast.makeText(SinglePlayActivity.this, "Kraj partije",
+				Toast.LENGTH_SHORT).show();
 		SinglePlayerObjects.clear(); // clear the objects from the
 										// SinglePlayerObjects class
 
 		long milisec = stopwatch.getElapsedTime();
-		String lastScore = String.format(Locale.getDefault(),
-				"%02d:%02d.%03d",
+		String lastScore = String.format(Locale.getDefault(), "%02d:%02d.%03d",
 				TimeUnit.MILLISECONDS.toMinutes(milisec),
 				TimeUnit.MILLISECONDS.toSeconds(milisec) % 60,
 				TimeUnit.MILLISECONDS.toMillis(milisec) % 1000);
 
 		editor.putString("lastScoreDeck", lastScore);
 		editor.commit();
-		
+
 		Intent resultAct = new Intent(this, SingleResultsActivity.class);
 		startActivity(resultAct);
-		
+
 		finish();
 	}
 
@@ -116,8 +117,9 @@ public class SinglePlayActivity extends Activity {
 	}
 
 	public void exit(View v) {
-		Toast.makeText(SinglePlayActivity.this, "Exited the game", Toast.LENGTH_SHORT).show(); // probably
-																								// superfluous
+		Toast.makeText(SinglePlayActivity.this, "Exited the game",
+				Toast.LENGTH_SHORT).show(); // probably
+											// superfluous
 		finish();
 	}
 
@@ -125,6 +127,16 @@ public class SinglePlayActivity extends Activity {
 		table.hint();
 		// TODO uncomment in production ((Button)
 		// findViewById(R.id.btnHint)).setEnabled(false);
+
+		// add the penalty time, update the total time spent, and set the
+		// chronometer to that time
+		stopwatch.addPenaltyTime(10);
+		stopwatch.pause();
+		stopwatch.resume();
+		chronometer = (Chronometer) findViewById(R.id.chronometer);
+		chronometer.setBase(stopwatch.getWhenToStart());
+		chronometer.start();
+
 		adapter.notifyDataSetChanged();
 	}
 
