@@ -108,7 +108,7 @@ public class MultiPlayActivity extends Activity {
 
 	public void playerMove(View v) {
 		playerOnMove = Integer.parseInt(v.getTag().toString());
-		Toast.makeText(this, v.getTag().toString(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, v.getTag().toString(), Toast.LENGTH_SHORT).show();
 		gridview.setEnabled(true);
 
 		countDownTimerField.setVisibility(View.VISIBLE);
@@ -123,6 +123,7 @@ public class MultiPlayActivity extends Activity {
 			public void onFinish() {
 				countDownTimerField.setVisibility(View.INVISIBLE);
 				processPlayerSelection(SetStatus.SET_FAIL); //fail the player for running out of time
+				gridview.setEnabled(false); //and disable the grid
 			}
 		}.start();
 
