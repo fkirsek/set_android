@@ -122,8 +122,9 @@ public class MultiPlayActivity extends Activity {
 
 			public void onFinish() {
 				countDownTimerField.setVisibility(View.INVISIBLE);
+				gridview.setEnabled(false); //disable the grid
 				processPlayerSelection(SetStatus.SET_FAIL); //fail the player for running out of time
-				gridview.setEnabled(false); //and disable the grid
+				table.clearSelection();
 			}
 		}.start();
 
