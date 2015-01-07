@@ -7,16 +7,17 @@ import hr.math.set.logic.Table;
 public class MultiPlayerObjects {
 	static Table table = null;
 	static int numPlayers = 2;
-
+	static int[] scores = null;
+	
 	// private constructor to deny initializing an object of this type
 	private MultiPlayerObjects() {
 	}
 
-	// creates new instances of stopwatch and play, so that a new play session
-	// may begin
+	// creates new instances of table and number of players
 	public static void init(boolean reshuf, int nPl) {
 		numPlayers = nPl;
 		table = new Table(reshuf);
+		scores = new int[4];
 	}
 
 	// clears the initialized objects, happens when the single player game ends

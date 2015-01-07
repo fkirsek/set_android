@@ -26,6 +26,8 @@ public class MultiPlayActivity extends Activity {
 	private ImageAdapter adapter;
 	private Table table;
 	private int playerOnMove;
+	private int[] scores;
+	
 	private CountDownTimer countDownTimer = null;
 	TextView countDownTimerField = null;
 
@@ -34,10 +36,20 @@ public class MultiPlayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multi_play);
 
+		//a variable that memorizes the location of the countdown timer
 		countDownTimerField = (TextView) findViewById(R.id.countdown);
+		
+		//reading variables from MultiPlayerObjects
 		table = MultiPlayerObjects.table;
 		numPlayers = MultiPlayerObjects.numPlayers;
-
+		scores = MultiPlayerObjects.scores;
+		
+		//update the player scores
+		for(int i = 0; i < 4; i++){
+			playerOnMove = i;
+			updateScoreDisplay();
+		}
+		
 		if (numPlayers < 4) {
 			findViewById(R.id.imageView3).setVisibility(View.GONE);
 			findViewById(R.id.setsPlayer3).setVisibility(View.GONE);
@@ -67,7 +79,6 @@ public class MultiPlayActivity extends Activity {
 												// the timer invisible
 
 					processPlayerSelection(status);
-
 					gridview.setEnabled(false);
 				}
 			}
@@ -76,21 +87,23 @@ public class MultiPlayActivity extends Activity {
 		gridview.setEnabled(false);
 
 	}
-
-	// a new function that processes the result of the selection the player made
-	// also used to automatically fail a player when the time runs outs
-	public void processPlayerSelection(SetStatus status) {
+	// updates the score of the player that was last playing
+	private void updateScoreDisplay(){
 		int textViewId = getResources().getIdentifier(
 				"setsPlayer" + playerOnMove, "id", "hr.math.set");
 		TextView setsPlayer = (TextView) findViewById(textViewId);
+		setsPlayer.setText(String.valueOf(scores[playerOnMove]));
+	}
 
-		int tmpNumSets = Integer.parseInt(setsPlayer.getText().toString());
-
+	// a new function that processes the result of the selection the player made
+	// also used to automatically fail a player when the time runs outs
+	private void processPlayerSelection(SetStatus status) {
 		if (status == SetStatus.SET_OK) {
-			setsPlayer.setText(String.valueOf(tmpNumSets + 1));
+			scores[playerOnMove]++;
 		} else {
-			setsPlayer.setText(String.valueOf(tmpNumSets - 1));
+			scores[playerOnMove]--;
 		}
+		updateScoreDisplay();
 	}
 
 	public void playerMove(View v) {
