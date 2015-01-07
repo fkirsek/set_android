@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Set</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Set</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="new_game">New Game</string>
@@ -11,11 +11,11 @@
     <string name="stats">Statistics</string>
     <string name="settings">Settings</string>
     <string name="exit">Exit</string>
-    <string name="title_activity_single_play">SinglePlayActivity</string>
+    <string name="title_activity_single_play">Singleplayer</string>
     <string name="hint">Hint</string>
     <string name="next_set">Next set</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_multi_play">MultiPlayActivity</string>
+    <string name="title_activity_multi_play">Multiplayer</string>
     <string name="num_of_players">Number of players</string>
     <string name="reshuffling">Card Deck Reshuffling</string>
     <string name="num_players_prompt">Choose number of players</string>

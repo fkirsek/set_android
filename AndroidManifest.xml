@@ -15,7 +15,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,15 +26,19 @@
         </activity>
         <activity
             android:name=".SinglePlayActivity"
-            android:label="@string/title_activity_single_play" >
+            android:label="@string/title_activity_single_play"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+             >
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
             android:name=".MultiPlayActivity"
-            android:label="@string/title_activity_multi_play" >
+            android:label="@string/title_activity_multi_play" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity
             android:name=".NumPlayersActivity"
@@ -41,7 +47,8 @@
         </activity>
         <activity
             android:name=".StatisticsActivity"
-            android:label="@string/title_activity_statistics" >
+            android:label="@string/title_activity_statistics" 
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         </activity>
         <activity
             android:name=".SingleResultsActivity"
