@@ -30,6 +30,8 @@ public class SinglePlayActivity extends Activity {
 	private SharedPreferences prefs;
 	private SharedPreferences.Editor editor;
 
+	private Button draw3;
+
 	// these two objects are pulled from the SinglePlayerObjects class
 	Table table;
 	Stopwatch stopwatch;
@@ -60,29 +62,43 @@ public class SinglePlayActivity extends Activity {
 		table = SinglePlayerObjects.table;
 		stopwatch = SinglePlayerObjects.stopwatch;
 
+		draw3 = (Button) findViewById(R.id.btnNext3);
+
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
 		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
 
+		if (table.size() == 12) {
+			draw3.setEnabled(true);
+		} else {
+			draw3.setEnabled(false);
+		}
+		
+
 		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
 				SetStatus status = table.selectCardAndCheck(position);
 
 				adapter.notifyDataSetChanged();
 				if (status == SetStatus.GAME_DONE) {
 					endGame();
-				} else
+				} else if (status == SetStatus.SET_OK || status == SetStatus.SET_FAIL) {
 					((Button) findViewById(R.id.btnHint)).setEnabled(true);
+				}
+
+				if (table.size() == 12 && table.canDrawNext3()) {
+					draw3.setEnabled(true);
+				} else {
+					draw3.setEnabled(false);
+				}
 			}
 		});
 	}
 
 	public void endGame() {
-		Toast.makeText(SinglePlayActivity.this, "Kraj partije",
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show();
 		SinglePlayerObjects.clear(); // clear the objects from the
 										// SinglePlayerObjects class
 
@@ -117,27 +133,34 @@ public class SinglePlayActivity extends Activity {
 	}
 
 	public void exit(View v) {
-		Toast.makeText(SinglePlayActivity.this, "Exited the game",
-				Toast.LENGTH_SHORT).show(); // probably
-											// superfluous
 		finish();
 	}
 
 	public void hint(View v) {
 		table.hint();
-		// TODO uncomment in production ((Button)
-		// findViewById(R.id.btnHint)).setEnabled(false);
+		((Button) findViewById(R.id.btnHint)).setEnabled(false);
 
 		// add the penalty time, update the total time spent, and set the
 		// chronometer to that time
+		addPenaltyTime();
+
+		adapter.notifyDataSetChanged();
+	}
+
+	public void drawNext3(View v) {
+		table.drawNext3();
+		adapter.notifyDataSetChanged();
+		draw3.setEnabled(false);
+		addPenaltyTime();
+	}
+
+	private void addPenaltyTime() {
 		stopwatch.addPenaltyTime(10);
 		stopwatch.pause();
 		stopwatch.resume();
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
 		chronometer.setBase(stopwatch.getWhenToStart());
 		chronometer.start();
-
-		adapter.notifyDataSetChanged();
 	}
 
 	public void set(View v) {

@@ -75,6 +75,10 @@ public class Table {
 		}
 		return true;
 	}
+	
+	public boolean canDrawNext3() {
+		return deck.canDrawNext3();
+	}
 
 	public List<Card> cards() {
 		return new ArrayList<Card>(cards);

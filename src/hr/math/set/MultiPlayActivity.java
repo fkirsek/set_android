@@ -7,7 +7,10 @@ import hr.math.set.util.ImageAdapter;
 import java.util.Arrays;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -118,12 +121,16 @@ public class MultiPlayActivity extends Activity {
 
 	public void playerMove(View v) {
 		playerOnMove = Integer.parseInt(v.getTag().toString());
+
 		gridview.setEnabled(true);
 
 		setClickableMultiplayerButtons(false);
 
 		((LinearLayout) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
 				.getColor(lightColorId[playerOnMove]));
+
+		MediaPlayer mp = MediaPlayer.create(MultiPlayActivity.this, R.raw.set);
+		mp.start();
 
 		countDownTimerField.setVisibility(View.VISIBLE);
 		countDownTimerField.setText("10");

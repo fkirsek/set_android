@@ -11,44 +11,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="hr.math.set.MainActivity" >
 
-    <Button
-        android:id="@+id/exitbutton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:onClick="exit"
-        android:text="@string/exit" />
+        android:orientation="horizontal"
+        android:weightSum="7" >
 
-    <Button
-        android:id="@+id/nextSetBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/exitbutton"
-        android:onClick="set"
-        android:text="@string/next_set" />
+        <Button
+            android:id="@+id/btnHint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:onClick="hint"
+            android:text="@string/hint" />
 
-    <Button
-        android:id="@+id/btnHint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/nextSetBtn"
-        android:layout_alignBottom="@id/nextSetBtn"
-        android:layout_toRightOf="@id/nextSetBtn"
-        android:onClick="hint"
-        android:text="@string/hint" />
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1" />
 
-    <Chronometer
-        android:id="@+id/chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnHint"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:id="@+id/btnNext3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:onClick="drawNext3"
+            android:text="@string/next_three" />
+    </LinearLayout>
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/chronometer"
+        android:layout_below="@id/topBar"
         android:layout_centerHorizontal="true"
         android:gravity="fill_horizontal|fill_vertical"
         android:horizontalSpacing="1dp"
