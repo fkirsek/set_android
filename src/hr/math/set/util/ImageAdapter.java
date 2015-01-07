@@ -53,9 +53,9 @@ public class ImageAdapter extends BaseAdapter {
 		imageView.setImageResource(resId);
 
 		if (table.getSelection().contains(tempCard)) {
-			imageView.setBackgroundColor(Color.rgb(200, 0, 0));
+			imageView.setBackgroundColor(Color.rgb(0, 255, 0));
 		} else {
-			imageView.setBackgroundColor(Color.alpha(0));
+			imageView.setBackgroundColor(Color.rgb(50, 50, 50));
 		}
 
 		return imageView;
