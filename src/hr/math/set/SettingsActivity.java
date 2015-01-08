@@ -7,6 +7,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -23,6 +25,7 @@ public class SettingsActivity extends Activity {
 	private EditText etPlayerName;
 	private ToggleButton toggleButton;
 	private RadioGroup radioGroup;
+	private EditText numberPicker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,7 @@ public class SettingsActivity extends Activity {
 		 * Player name.
 		 */
 		etPlayerName = (EditText) findViewById(R.id.etPlayerName);
-		etPlayerName.setText(prefs.getString("playerName", ""));
-
+		etPlayerName.setText(prefs.getString("playerName",""));
 		etPlayerName.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable s) {
 				String tmpPlayerName = etPlayerName.getText().toString();
@@ -59,7 +61,6 @@ public class SettingsActivity extends Activity {
 		 */
 		toggleButton = (ToggleButton) findViewById(R.id.tbReshuffling);
 		toggleButton.setChecked(prefs.getBoolean("cardDeckReshuffle", false));
-
 		toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
 			@Override
@@ -74,8 +75,8 @@ public class SettingsActivity extends Activity {
 		 */
 		radioGroup = (RadioGroup) findViewById(R.id.rgNumPlayers);
 		int tmpNumPlayers = prefs.getInt("numPlayers", 2);
-		radioGroup.check(getResources().getIdentifier("radioPlayers" + tmpNumPlayers, "id",
-				"hr.math.set"));
+		radioGroup.check(getResources().getIdentifier(
+				"radioPlayers" + tmpNumPlayers, "id", "hr.math.set"));
 
 		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -88,6 +89,32 @@ public class SettingsActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
+
+		/*
+		 * Timeout length settings
+		 */
+		
+		numberPicker = (EditText) findViewById(R.id.etTimeoutLength);
+		int tempTimeout = prefs.getInt("timeoutSeconds", 10);
+		numberPicker.setText(tempTimeout + "" );
+		numberPicker.setOnFocusChangeListener(new OnFocusChangeListener() {
+			// TODO ne radi bas ... (samo na enter i tab gubi focus)
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus) {
+					String tempTimeoutStr = numberPicker.getText().toString();
+					if (tempTimeoutStr.length() != 0) {
+						Toast.makeText(getBaseContext(), tempTimeoutStr,
+								Toast.LENGTH_SHORT).show();
+						editor.putInt("timeoutSeconds", Integer
+								.parseInt(tempTimeoutStr));
+						editor.commit();
+					}
+				} 
+			}
+		});
+		
+		
 
 	}
 
