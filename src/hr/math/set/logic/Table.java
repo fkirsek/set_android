@@ -19,13 +19,13 @@ public class Table {
 	public final int GAME_NOT_DONE = 0;
 	public final int GAME_DONE = 1;
 
-	//constructor if the reshuffle setting WAS provided
-	public Table(boolean reshuf){
+	// constructor if the reshuffle setting WAS provided
+	public Table(boolean reshuf) {
 		deck = new CardDeck(reshuf);
 		initializeTable(); // initialize the field
 	}
-	
-	//if the reshuffle setting wasn't provided
+
+	// if the reshuffle setting wasn't provided
 	public Table() {
 		deck = new CardDeck();
 		initializeTable(); // initialize the field
@@ -64,6 +64,14 @@ public class Table {
 			cards.remove(selection.get(i));
 		}
 	}
+	
+	public void replaceSelected() {
+		int[] rmIndices = new int[3];
+		for (int i = 0; i < 3; i++) {
+			rmIndices[i] = cards.indexOf(selection.get(i));
+		}
+		drawNext3(rmIndices);
+	}
 
 	public boolean drawNext3() {
 		for (int i = 0; i < 3; i++) {
@@ -72,6 +80,17 @@ public class Table {
 				return false;
 			}
 			cards.add(c);
+		}
+		return true;
+	}
+	
+	public boolean drawNext3(int[] indices) {
+		for (int i = 0; i < 3; i++) {
+			Card c = deck.nextCard(this);
+			if (c == null) {
+				return false;
+			}
+			cards.set(indices[i], c);
 		}
 		return true;
 	}
@@ -109,8 +128,7 @@ public class Table {
 		for (int i = 0; i < n - 2; i++) {
 			for (int j = i + 1; j < n - 1; j++) {
 				for (int k = j + 1; k < n; k++) {
-					List<Card> set = Arrays.asList(cards.get(i), cards.get(j),
-							cards.get(k));
+					List<Card> set = Arrays.asList(cards.get(i), cards.get(j), cards.get(k));
 					if (isSet(set)) {
 						return set;
 					}
@@ -129,10 +147,14 @@ public class Table {
 		// TODO provjeri ako sam nesto zabrljao
 		SetStatus status = selectCard(position);
 		if (status == SetStatus.SET_OK) {
-			removeSelected();
-			if (size() < 12) {
-				drawNext3();
+			if (size() > 12) {
+				removeSelected();
+			} else {
+				replaceSelected();
 			}
+			/*
+			 * removeSelected(); if (size() < 12) { drawNext3(remIndices); }
+			 */
 			if (!ensureSet()) {
 				reset();
 				return SetStatus.GAME_DONE;
