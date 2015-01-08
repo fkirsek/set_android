@@ -3,6 +3,7 @@ package hr.math.set;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,17 +22,24 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
+
+		Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+
+		((Button) findViewById(R.id.btnResumeGame)).setTypeface(custom_font);
+		((Button) findViewById(R.id.btnNewGame)).setTypeface(custom_font);
+		((Button) findViewById(R.id.btnMultiplayer)).setTypeface(custom_font);
+		((Button) findViewById(R.id.btnSettings)).setTypeface(custom_font);
+		((Button) findViewById(R.id.btnStats)).setTypeface(custom_font);
+		((Button) findViewById(R.id.btnExit)).setTypeface(custom_font);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (SinglePlayerObjects.table == null) {
-			((Button) findViewById(R.id.btnResumeGame))
-					.setVisibility(View.GONE);
+			((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.GONE);
 		} else {
-			((Button) findViewById(R.id.btnResumeGame))
-					.setVisibility(View.VISIBLE);
+			((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.VISIBLE);
 		}
 	};
 
@@ -76,12 +84,12 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 		this.startActivity(intent);
 	}
-	
+
 	public void statistics(View view) {
 		Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
 		this.startActivity(intent);
 	}
-	
+
 	public void exit(View view) {
 		finish();
 	}
