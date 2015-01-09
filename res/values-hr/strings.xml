@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Set</string>
+    <string name="title_activity_main">Set</string>
+    <string name="hello_world">Zdravo, svijete!</string>
+    <string name="action_settings">Postavke</string>
+    <string name="new_game">Nova igra</string>
+    <string name="resume_game">Nastavi igru</string>
+    <string name="multiplayer">Više igrača</string>
+    <string name="stats">Statistika</string>
+    <string name="settings">Postavke</string>
+    <string name="exit">Izlaz</string>
+    <string name="title_activity_single_play">Singleplayer</string>
+    <string name="hint">Savjet</string>
+    <string name="next_three">Povuci 3</string>
+    <string name="next_set">Idući set</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_multi_play">Multiplayer</string>
+    <string name="num_of_players">Broj igrača</string>
+    <string name="reshuffling">Ponovno miješanje špila</string>
+    <string name="num_players_prompt">Izaberite broj igrača</string>
+    <string name="highScoreDeck">Najbolji rezultat</string>
+    <string name="lastScoreDeck">Posljednji rezultat</string>
+    <string name="OK">OK</string>
+    <string name="player_name">Ime igrača</string>
+
+    <string-array name="num_players">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string name="title_activity_num_players">NumPlayersActivity</string>
+    <string name="title_activity_statistics">StatisticsActivity</string>
+    <string name="title_activity_single_results">SingleResultsActivity</string>
+    <string name="title_activity_multi_results">MultiResultsActivity</string>
+    <string name="timeout">Vrijeme za  označavanje (u sekundama)</string>
+
+</resources>
