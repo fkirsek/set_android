@@ -1,6 +1,8 @@
 package hr.math.set;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -15,6 +17,7 @@ public class MainActivity extends Activity {
 
 	ImageButton button;
 	SharedPreferences prefs;
+	Typeface custom_font;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,7 @@ public class MainActivity extends Activity {
 
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 
-		Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+		custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
 
 		((Button) findViewById(R.id.btnResumeGame)).setTypeface(custom_font);
 		((Button) findViewById(R.id.btnNewGame)).setTypeface(custom_font);
@@ -45,16 +48,12 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -63,11 +62,30 @@ public class MainActivity extends Activity {
 	}
 
 	public void newSinglePlay(View view) {
-		Intent intent = new Intent(MainActivity.this, SinglePlayActivity.class);
+		if (((Button) findViewById(R.id.btnResumeGame)).getVisibility() == View.VISIBLE) {
+			// Resume button is visible -> ask user if he really wants to start
+			// new game
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		// initialize a new game with the boolean value of set reshuffle
+			builder.setTitle("Are you sure?");
+			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int whichButton) {
+					startNewSinglePlay();
+				}
+			});
+			builder.setNegativeButton("No", null);
+			builder.create().show();
+		} else {
+			// Resume button is not visible -> start new game immediately
+			startNewSinglePlay();
+		}
+	}
+
+	private void startNewSinglePlay() {
+		Intent intent = new Intent(MainActivity.this, SinglePlayActivity.class);
 		SinglePlayerObjects.init(prefs.getBoolean("cardDeckReshuffle", false));
-		this.startActivity(intent);
+		MainActivity.this.startActivity(intent);
 	}
 
 	public void rsmSinglePlay(View view) {
@@ -76,8 +94,21 @@ public class MainActivity extends Activity {
 	}
 
 	public void newMultiPlay(View view) {
-		Intent numPlayersIntent = new Intent(MainActivity.this, NumPlayersActivity.class);
-		this.startActivityForResult(numPlayersIntent, 1);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder.setTitle("Pick number of players").setItems(R.array.num_players,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						// The 'which' argument contains the index position
+						// of the selected item
+						Intent intent = new Intent(MainActivity.this, MultiPlayActivity.class);
+						MultiPlayerObjects.init(prefs.getBoolean("cardDeckReshuffle", false),
+								which + 2, prefs.getInt("timeoutSeconds", 10));
+						MainActivity.this.startActivity(intent);
+					}
+				});
+
+		builder.create().show();
 	}
 
 	public void settings(View view) {
@@ -92,18 +123,6 @@ public class MainActivity extends Activity {
 
 	public void exit(View view) {
 		finish();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1 && resultCode == RESULT_OK) {
-			if (resultCode == RESULT_OK) {
-				Intent intent = new Intent(MainActivity.this, MultiPlayActivity.class);
-				MultiPlayerObjects.init(prefs.getBoolean("cardDeckReshuffle", false),
-						prefs.getInt("numPlayers", 2), prefs.getInt("timeoutSeconds", 10));
-				this.startActivity(intent);
-			}
-		}
 	}
 
 }

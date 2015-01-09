@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context="hr.math.set.StatisticsActivity" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvHighScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/highScoreDeck"
@@ -17,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
         android:weightSum="2" >
 
         <TextView
@@ -35,7 +37,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvLastScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/lastScoreDeck"

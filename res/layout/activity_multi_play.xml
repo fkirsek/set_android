@@ -7,33 +7,60 @@
 
     <!-- upper left | red | player1 -->
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/player0"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@color/darkBlue"
-        android:clickable="true"
-        android:onClick="playerMove"
         android:orientation="horizontal"
-        android:tag="0" />
+        android:tag="0" >
 
-    <LinearLayout
+        <Button
+            android:id="@+id/button0"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/darkBlue"
+            android:onClick="playerMove"
+            android:tag="0" />
+
+        <TextView
+            android:id="@+id/countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/primary_material_light" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/player1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@color/darkRed"
-        android:clickable="true"
-        android:onClick="playerMove"
         android:orientation="horizontal"
-        android:tag="1" />
+        android:tag="1" >
 
-    <LinearLayout
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/darkRed"
+            android:onClick="playerMove"
+            android:tag="1" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/player2"
         android:layout_width="50dp"
         android:layout_height="match_parent"
@@ -41,13 +68,20 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/player0"
         android:layout_marginBottom="50dp"
-        android:background="@color/darkGreen"
-        android:clickable="true"
-        android:onClick="playerMove"
         android:orientation="horizontal"
-        android:tag="2" />
+        android:tag="2" >
 
-    <LinearLayout
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="@color/darkGreen"
+            android:onClick="playerMove"
+            android:tag="2" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/player3"
         android:layout_width="50dp"
         android:layout_height="match_parent"
@@ -55,11 +89,18 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/player0"
         android:layout_marginBottom="50dp"
-        android:background="@color/darkYellow"
-        android:clickable="true"
-        android:onClick="playerMove"
         android:orientation="horizontal"
-        android:tag="3" />
+        android:tag="3" >
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="@color/darkYellow"
+            android:onClick="playerMove"
+            android:tag="3" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/setsPlayer0"
@@ -67,6 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
+        android:paddingTop="15dp"
         android:text="0" />
 
     <TextView
@@ -75,6 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:paddingBottom="15dp"
         android:text="0" />
 
     <TextView
@@ -84,6 +127,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
+        android:paddingLeft="18dp"
         android:text="0" />
 
     <TextView
@@ -93,6 +137,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
+        android:paddingRight="18dp"
         android:text="0" />
 
     <GridView
@@ -128,16 +173,6 @@
         android:layout_alignLeft="@+id/button1"
         android:layout_marginLeft="100dp"
         android:onClick="set"
-        android:text="Set" /
-    -->
-
-    <TextView
-        android:id="@+id/countdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/player0"
-        android:layout_centerHorizontal="true"
-        android:text=""
-        android:visibility="invisible" />
+        android:text="Set" /    -->
 
 </RelativeLayout>

@@ -2,19 +2,13 @@ package hr.math.set;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 public class SettingsActivity extends Activity {
@@ -23,15 +17,22 @@ public class SettingsActivity extends Activity {
 	private SharedPreferences.Editor editor;
 
 	private EditText etPlayerName;
-	private ToggleButton toggleButton;
-	private RadioGroup radioGroup;
-	private EditText numberPicker;
+	private ToggleButton tbReshuffle;
+	// private RadioGroup radioGroup;
+	private EditText etTimeout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
+		Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+
+		((TextView) findViewById(R.id.tvPlayerName)).setTypeface(custom_font);
+		((TextView) findViewById(R.id.tvReshuffling)).setTypeface(custom_font);
+		((TextView) findViewById(R.id.tvTimeoutText)).setTypeface(custom_font);
+		
+		
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 		editor = prefs.edit();
 
@@ -39,7 +40,8 @@ public class SettingsActivity extends Activity {
 		 * Player name.
 		 */
 		etPlayerName = (EditText) findViewById(R.id.etPlayerName);
-		etPlayerName.setText(prefs.getString("playerName",""));
+		etPlayerName.setText(prefs.getString("playerName", ""));
+		/*
 		etPlayerName.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable s) {
 				String tmpPlayerName = etPlayerName.getText().toString();
@@ -55,13 +57,14 @@ public class SettingsActivity extends Activity {
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
 		});
+		*/
 
 		/*
 		 * Reshuffle card deck settings.
 		 */
-		toggleButton = (ToggleButton) findViewById(R.id.tbReshuffling);
-		toggleButton.setChecked(prefs.getBoolean("cardDeckReshuffle", false));
-		toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		tbReshuffle = (ToggleButton) findViewById(R.id.tbReshuffling);
+		tbReshuffle.setChecked(prefs.getBoolean("cardDeckReshuffle", false));
+		tbReshuffle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -73,6 +76,7 @@ public class SettingsActivity extends Activity {
 		/*
 		 * Number of players settings.
 		 */
+		/*
 		radioGroup = (RadioGroup) findViewById(R.id.rgNumPlayers);
 		int tmpNumPlayers = prefs.getInt("numPlayers", 2);
 		radioGroup.check(getResources().getIdentifier(
@@ -89,33 +93,45 @@ public class SettingsActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
+		*/
 
 		/*
 		 * Timeout length settings
 		 */
-		
-		numberPicker = (EditText) findViewById(R.id.etTimeoutLength);
+		etTimeout = (EditText) findViewById(R.id.etTimeoutLength);
 		int tempTimeout = prefs.getInt("timeoutSeconds", 10);
-		numberPicker.setText(tempTimeout + "" );
-		numberPicker.setOnFocusChangeListener(new OnFocusChangeListener() {
+		etTimeout.setText(tempTimeout + "");
+		/*
+		etTimeout.setOnFocusChangeListener(new OnFocusChangeListener() {
 			// TODO ne radi bas ... (samo na enter i tab gubi focus)
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
-					String tempTimeoutStr = numberPicker.getText().toString();
+					String tempTimeoutStr = etTimeout.getText().toString();
 					if (tempTimeoutStr.length() != 0) {
-						Toast.makeText(getBaseContext(), tempTimeoutStr,
-								Toast.LENGTH_SHORT).show();
-						editor.putInt("timeoutSeconds", Integer
-								.parseInt(tempTimeoutStr));
+						Toast.makeText(getBaseContext(), tempTimeoutStr, Toast.LENGTH_SHORT).show();
+						editor.putInt("timeoutSeconds", Integer.parseInt(tempTimeoutStr));
 						editor.commit();
 					}
-				} 
+				}
 			}
 		});
-		
-		
+		*/
+	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		editor.putString("playerName", etPlayerName.getText().toString());
+		
+		editor.putBoolean("cardDeckReshuffle", tbReshuffle.isChecked());
+
+		String tempTimeoutStr = etTimeout.getText().toString();
+		if (tempTimeoutStr.length() != 0) {
+			editor.putInt("timeoutSeconds", Integer.parseInt(tempTimeoutStr));
+		}
+		editor.commit();
 	}
 
 	@Override

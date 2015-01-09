@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,6 +63,11 @@ public class SinglePlayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_single_play);
 
+		Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+
+		((Button) findViewById(R.id.btnHint)).setTypeface(custom_font);
+		((Button) findViewById(R.id.btnNext3)).setTypeface(custom_font);
+
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 		editor = prefs.edit();
 
@@ -79,7 +85,7 @@ public class SinglePlayActivity extends Activity {
 
 		// set up scorebox
 		scoreBox = (TextView) findViewById(R.id.scoreBox);
-		scoreBox.setText(Integer.toString(score[0]) );
+		scoreBox.setText(Integer.toString(score[0]));
 
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
@@ -93,38 +99,34 @@ public class SinglePlayActivity extends Activity {
 		}
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
 				SetStatus status = table.selectCardAndCheck(position);
 
 				adapter.notifyDataSetChanged();
 				if (status == SetStatus.GAME_DONE) {
 					endGame();
-				} else if (status == SetStatus.SET_OK
-						|| status == SetStatus.SET_FAIL) {
+				} else if (status == SetStatus.SET_OK || status == SetStatus.SET_FAIL) {
 					((Button) findViewById(R.id.btnHint)).setEnabled(true);
 				}
-				
 
 				if (table.size() == 12 && table.canDrawNext3()) {
 					draw3.setEnabled(true);
 				} else {
 					draw3.setEnabled(false);
 				}
-				
-				if(status == SetStatus.SET_OK){
+
+				if (status == SetStatus.SET_OK) {
 					// if a set was found...
 					score[0]++;
-					scoreBox.setText(Integer.toString(score[0]) );
+					scoreBox.setText(Integer.toString(score[0]));
 				}
 			}
 		});
 	}
 
 	public void endGame() {
-		Toast.makeText(SinglePlayActivity.this, "Kraj partije",
-				Toast.LENGTH_SHORT).show();
+		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show();
 		SinglePlayerObjects.clear(); // clear the objects from the
 										// SinglePlayerObjects class
 

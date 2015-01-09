@@ -10,13 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="hr.math.set.SettingsActivity" >
 
-<!--     player name -->
+    <!-- player name -->
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvPlayerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/player_name" />
+        android:text="@string/player_name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/etPlayerName"
@@ -26,13 +27,14 @@
         android:inputType="textPersonName" >
     </EditText>
 
-<!--     reshuffling -->
+    <!-- reshuffling -->
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvReshuffling"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reshuffling" />
+        android:text="@string/reshuffling"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ToggleButton
         android:id="@+id/tbReshuffling"
@@ -40,9 +42,11 @@
         android:layout_height="wrap_content"
         android:text="" />
 
-<!--     number of players -->
+    <!-- number of players -->
 
-    <TextView
+
+    <!--
+    TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,23 +76,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4" />
-    </RadioGroup>
-    
-    <!--     timeout length
- -->
+    </RadioGroup
+    -->
+
+
+    <!-- timeout length -->
 
     <TextView
-        android:id="@+id/timeoutText"
+        android:id="@+id/tvTimeoutText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/timeout" />
+        android:text="@string/timeout"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/etTimeoutLength"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numeric="integer"
-	>
+        android:inputType="numberSigned" >
     </EditText>
 
 </LinearLayout>

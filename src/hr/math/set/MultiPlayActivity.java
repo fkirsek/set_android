@@ -16,8 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +31,7 @@ public class MultiPlayActivity extends Activity {
 	private int[] scores;
 	private int timeout;
 
-	private int[] playerId = new int[] { R.id.player0, R.id.player1, R.id.player2, R.id.player3 };
+	private int[] playerId = new int[] { R.id.button0, R.id.button1, R.id.button2, R.id.button3 };
 	private int[] lightColorId = new int[] { R.color.lightBlue, R.color.lightRed,
 			R.color.lightGreen, R.color.lightYellow };
 	private int[] darkColorId = new int[] { R.color.darkBlue, R.color.darkRed, R.color.darkGreen,
@@ -110,7 +110,7 @@ public class MultiPlayActivity extends Activity {
 		}
 		updateScoreDisplay();
 
-		((LinearLayout) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
+		((Button) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
 				.getColor(darkColorId[playerOnMove]));
 		table.clearSelection();
 		gridview.setEnabled(false);
@@ -124,7 +124,7 @@ public class MultiPlayActivity extends Activity {
 
 		setClickableMultiplayerButtons(false);
 
-		((LinearLayout) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
+		((Button) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
 				.getColor(lightColorId[playerOnMove]));
 
 		MediaPlayer mp = MediaPlayer.create(MultiPlayActivity.this, R.raw.set);
@@ -151,7 +151,7 @@ public class MultiPlayActivity extends Activity {
 
 	private void setClickableMultiplayerButtons(boolean clickable) {
 		for (int i = 0; i < numPlayers; i++) {
-			((LinearLayout) findViewById(playerId[i])).setClickable(clickable);
+			((Button) findViewById(playerId[i])).setClickable(clickable);
 		}
 	}
 

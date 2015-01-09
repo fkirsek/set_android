@@ -2,6 +2,7 @@ package hr.math.set;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,14 @@ public class StatisticsActivity extends Activity {
 
 		getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		/*
+		 * Font
+		 */
+		Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+
+		((TextView) findViewById(R.id.tvHighScore)).setTypeface(custom_font);
+		((TextView) findViewById(R.id.tvLastScore)).setTypeface(custom_font);
 
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 
