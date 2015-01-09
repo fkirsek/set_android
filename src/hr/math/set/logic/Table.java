@@ -64,7 +64,7 @@ public class Table {
 			cards.remove(selection.get(i));
 		}
 	}
-	
+
 	public void replaceSelected() {
 		int[] rmIndices = new int[3];
 		for (int i = 0; i < 3; i++) {
@@ -83,20 +83,24 @@ public class Table {
 		}
 		return true;
 	}
-	
+
 	public boolean drawNext3(int[] indices) {
 		boolean retVal = true;
-		for (int i = 0; i < 3; i++) {
+		Arrays.sort(indices);
+		// sort the array ascendingly, and then go in the reverse order so that
+		// it behaves as if it was descending
+		// TODO: do this in a nicer way
+		for (int i = 2; i >= 0; i--) {
 			Card c = deck.nextCard(this);
 			if (c == null) {
 				retVal = false;
 				cards.remove(indices[i]);
-			}
-			else cards.set(indices[i], c);
+			} else
+				cards.set(indices[i], c);
 		}
 		return retVal;
 	}
-	
+
 	public boolean canDrawNext3() {
 		return deck.canDrawNext3();
 	}
@@ -130,7 +134,8 @@ public class Table {
 		for (int i = 0; i < n - 2; i++) {
 			for (int j = i + 1; j < n - 1; j++) {
 				for (int k = j + 1; k < n; k++) {
-					List<Card> set = Arrays.asList(cards.get(i), cards.get(j), cards.get(k));
+					List<Card> set = Arrays.asList(cards.get(i), cards.get(j),
+							cards.get(k));
 					if (isSet(set)) {
 						return set;
 					}
