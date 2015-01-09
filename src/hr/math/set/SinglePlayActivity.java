@@ -20,21 +20,27 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SinglePlayActivity extends Activity {
 
-	GridView gridview;
-	ImageAdapter adapter;
-	Chronometer chronometer;
+	// buttons, views, adapters
+	private GridView gridview;
+	private ImageAdapter adapter;
+	private Chronometer chronometer;
+	private TextView scoreBox;
+	private Button draw3;
+
 	private SharedPreferences prefs;
 	private SharedPreferences.Editor editor;
 
-	private Button draw3;
-
-	// these two objects are pulled from the SinglePlayerObjects class
+	// these three objects are pulled from the SinglePlayerObjects class
 	Table table;
 	Stopwatch stopwatch;
+	// a field so I can work with references, ie. avoid packing/unpacking
+	// objects etc.
+	private int[] score;
 
 	protected void onPause() {
 		super.onPause();
@@ -61,8 +67,19 @@ public class SinglePlayActivity extends Activity {
 
 		table = SinglePlayerObjects.table;
 		stopwatch = SinglePlayerObjects.stopwatch;
+		score = SinglePlayerObjects.score;
 
 		draw3 = (Button) findViewById(R.id.btnNext3);
+
+		// if the reshuffle is set, don't show the chronometer
+		if (SinglePlayerObjects.reshuf) {
+			chronometer = (Chronometer) findViewById(R.id.chronometer);
+			chronometer.setVisibility(View.GONE);
+		}
+
+		// set up scorebox
+		scoreBox = (TextView) findViewById(R.id.scoreBox);
+		scoreBox.setText(Integer.toString(score[0]) );
 
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
@@ -74,31 +91,40 @@ public class SinglePlayActivity extends Activity {
 		} else {
 			draw3.setEnabled(false);
 		}
-		
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
 
 				SetStatus status = table.selectCardAndCheck(position);
 
 				adapter.notifyDataSetChanged();
 				if (status == SetStatus.GAME_DONE) {
 					endGame();
-				} else if (status == SetStatus.SET_OK || status == SetStatus.SET_FAIL) {
+				} else if (status == SetStatus.SET_OK
+						|| status == SetStatus.SET_FAIL) {
 					((Button) findViewById(R.id.btnHint)).setEnabled(true);
 				}
+				
 
 				if (table.size() == 12 && table.canDrawNext3()) {
 					draw3.setEnabled(true);
 				} else {
 					draw3.setEnabled(false);
 				}
+				
+				if(status == SetStatus.SET_OK){
+					// if a set was found...
+					score[0]++;
+					scoreBox.setText(Integer.toString(score[0]) );
+				}
 			}
 		});
 	}
 
 	public void endGame() {
-		Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show();
+		Toast.makeText(SinglePlayActivity.this, "Kraj partije",
+				Toast.LENGTH_SHORT).show();
 		SinglePlayerObjects.clear(); // clear the objects from the
 										// SinglePlayerObjects class
 
@@ -151,7 +177,10 @@ public class SinglePlayActivity extends Activity {
 		table.drawNext3();
 		adapter.notifyDataSetChanged();
 		draw3.setEnabled(false);
-		addPenaltyTime();
+
+		// add penalty time for hitting next only if there was a set beforehand
+		if (table.existsSet())
+			addPenaltyTime();
 	}
 
 	private void addPenaltyTime() {

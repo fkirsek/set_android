@@ -8,6 +8,11 @@ import hr.math.set.util.Stopwatch;
 public class SinglePlayerObjects {
 	static Stopwatch stopwatch = null;
 	static Table table = null;
+	// score is a field so I can work with references, ie. avoid
+	// packing/unpacking objects etc.
+	static int[] score = null;
+	
+	static Boolean reshuf;
 
 	// private constructor to deny initializing an object of this type
 	private SinglePlayerObjects() {
@@ -17,9 +22,12 @@ public class SinglePlayerObjects {
 	// may begin
 	// the argument is the setting whether the game will reshuffle the deck once
 	// all sets have been found, or not
-	public static void init(boolean reshuf) {
+	public static void init(boolean reshufInput) {
 		stopwatch = new Stopwatch();
-		table = new Table(reshuf);
+		table = new Table(reshufInput);
+		score = new int[1];
+		reshuf = reshufInput;
+		score[0] = 0;
 	}
 
 	// clears the initialized objects, happens when the single player game ends

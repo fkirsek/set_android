@@ -184,7 +184,7 @@ public class Table {
 		}
 	}
 
-	private boolean existsSet() {
+	public boolean existsSet() {
 		return getSet() != null;
 	}
 
