@@ -85,14 +85,16 @@ public class Table {
 	}
 	
 	public boolean drawNext3(int[] indices) {
+		boolean retVal = true;
 		for (int i = 0; i < 3; i++) {
 			Card c = deck.nextCard(this);
 			if (c == null) {
-				return false;
+				retVal = false;
+				cards.remove(indices[i]);
 			}
-			cards.set(indices[i], c);
+			else cards.set(indices[i], c);
 		}
-		return true;
+		return retVal;
 	}
 	
 	public boolean canDrawNext3() {
