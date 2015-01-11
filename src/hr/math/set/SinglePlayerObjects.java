@@ -11,11 +11,12 @@ public class SinglePlayerObjects {
 	// score is a field so I can work with references, ie. avoid
 	// packing/unpacking objects etc.
 	static int[] score = null;
-	
+
 	static Boolean reshuf;
 
-	// private constructor to deny initializing an object of this type
-	private SinglePlayerObjects() {
+	// the constructor is public so that I can use GSON on this class. Not the
+	// prettiest way, but eh
+	public SinglePlayerObjects() {
 	}
 
 	// creates new instances of stopwatch and play, so that a new play session

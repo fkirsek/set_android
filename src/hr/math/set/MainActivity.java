@@ -1,5 +1,7 @@
 package hr.math.set;
 
+import java.lang.reflect.Modifier;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,6 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class MainActivity extends Activity {
 
@@ -26,7 +31,17 @@ public class MainActivity extends Activity {
 
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 
-		custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+		custom_font = Typeface.createFromAsset(getAssets(),
+				"fonts/Drawing Guides.ttf");
+
+		// JSON/GSON shenaningans
+		String jsonData = prefs.getString("SinglePlayerObjects", "");
+		Gson gson = new GsonBuilder().serializeNulls()
+				.excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+		
+		@SuppressWarnings("unused")
+		SinglePlayerObjects tempSPO = new SinglePlayerObjects();
+		tempSPO = gson.fromJson(jsonData, SinglePlayerObjects.class);
 
 		((Button) findViewById(R.id.btnResumeGame)).setTypeface(custom_font);
 		((Button) findViewById(R.id.btnNewGame)).setTypeface(custom_font);
@@ -36,14 +51,27 @@ public class MainActivity extends Activity {
 		((Button) findViewById(R.id.btnExit)).setTypeface(custom_font);
 	}
 
+	public void onDestroy() {
+		super.onDestroy();
+		Gson gson = new GsonBuilder().serializeNulls()
+				.excludeFieldsWithModifiers(Modifier.TRANSIENT).create();
+		SinglePlayerObjects tempSPO = new SinglePlayerObjects();
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString("SinglePlayerObjects", gson.toJson(tempSPO));
+		editor.commit();
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		if (SinglePlayerObjects.table == null) {
-			((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.GONE);
+			((Button) findViewById(R.id.btnResumeGame))
+					.setVisibility(View.GONE);
 		} else {
-			((Button) findViewById(R.id.btnResumeGame)).setVisibility(View.VISIBLE);
+			((Button) findViewById(R.id.btnResumeGame))
+					.setVisibility(View.VISIBLE);
 		}
+
 	};
 
 	@Override
@@ -68,12 +96,14 @@ public class MainActivity extends Activity {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 			builder.setTitle("Are you sure?");
-			builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int whichButton) {
-					startNewSinglePlay();
-				}
-			});
+			builder.setPositiveButton("Yes",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog,
+								int whichButton) {
+							startNewSinglePlay();
+						}
+					});
 			builder.setNegativeButton("No", null);
 			builder.create().show();
 		} else {
@@ -96,13 +126,15 @@ public class MainActivity extends Activity {
 	public void newMultiPlay(View view) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		builder.setTitle("Pick number of players").setItems(R.array.num_players,
-				new DialogInterface.OnClickListener() {
+		builder.setTitle("Pick number of players").setItems(
+				R.array.num_players, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						// The 'which' argument contains the index position
 						// of the selected item
-						Intent intent = new Intent(MainActivity.this, MultiPlayActivity.class);
-						MultiPlayerObjects.init(prefs.getBoolean("cardDeckReshuffle", false),
+						Intent intent = new Intent(MainActivity.this,
+								MultiPlayActivity.class);
+						MultiPlayerObjects.init(
+								prefs.getBoolean("cardDeckReshuffle", false),
 								which + 2, prefs.getInt("timeoutSeconds", 10));
 						MainActivity.this.startActivity(intent);
 					}
