@@ -87,16 +87,22 @@ public class SinglePlayActivity extends Activity {
 		scoreBox = (TextView) findViewById(R.id.scoreBox);
 		scoreBox.setText(Integer.toString(score[0]));
 
+		
+		// autofit width
+		
+		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - 10;
+		width = (int)(width/4);
+		//gridview.setColumnWidth(width/4 - 10);
+		
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
-		adapter = new ImageAdapter(this, table);
+		adapter = new ImageAdapter(this, table, width);
 		gridview.setAdapter(adapter);
 		
 		
-		// autofit width
-		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels;
-		gridview.setColumnWidth(width/4 - 10);
 
+		
+		
 		if (table.size() == 12) {
 			draw3.setEnabled(true);
 		} else {
