@@ -71,10 +71,9 @@
         android:layout_height="match_parent"
         android:layout_below="@id/topBar"
         android:layout_centerHorizontal="true"
-        android:columnWidth="@dimen/grid_column_width"
         android:gravity="fill_horizontal|fill_vertical"
         android:horizontalSpacing="10dp"
-        android:numColumns="auto_fit"
+        android:numColumns="4"
         android:verticalSpacing="10dp"
          />
 

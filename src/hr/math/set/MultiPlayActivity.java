@@ -7,10 +7,13 @@ import hr.math.set.util.ImageAdapter;
 import java.util.Arrays;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,6 +75,11 @@ public class MultiPlayActivity extends Activity {
 		gridview = (GridView) findViewById(R.id.gridview);
 		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
+		
+		// autofit width
+		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels;
+		// 50dpi sa svake strane (za javljanje igraca), 5 spacing
+		gridview.setColumnWidth((int)(width - convertDpToPixel(100, this) / 4 - 5));
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -90,6 +98,13 @@ public class MultiPlayActivity extends Activity {
 		});
 
 		gridview.setEnabled(false);
+	}
+	
+	public static float convertDpToPixel(float dp, Context context){
+	    Resources resources = context.getResources();
+	    DisplayMetrics metrics = resources.getDisplayMetrics();
+	    float px = dp * (metrics.densityDpi / 160f);
+	    return px;
 	}
 
 	// updates the score of the player that was last playing
@@ -110,8 +125,8 @@ public class MultiPlayActivity extends Activity {
 		}
 		updateScoreDisplay();
 
-		((Button) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
-				.getColor(darkColorId[playerOnMove]));
+		((Button) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources().getColor(
+				darkColorId[playerOnMove]));
 		table.clearSelection();
 		gridview.setEnabled(false);
 		setClickableMultiplayerButtons(true);
@@ -124,8 +139,8 @@ public class MultiPlayActivity extends Activity {
 
 		setClickableMultiplayerButtons(false);
 
-		((Button) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources()
-				.getColor(lightColorId[playerOnMove]));
+		((Button) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources().getColor(
+				lightColorId[playerOnMove]));
 
 		MediaPlayer mp = MediaPlayer.create(MultiPlayActivity.this, R.raw.set);
 		mp.start();

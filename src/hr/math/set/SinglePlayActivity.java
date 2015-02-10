@@ -91,6 +91,11 @@ public class SinglePlayActivity extends Activity {
 		gridview = (GridView) findViewById(R.id.gridview);
 		adapter = new ImageAdapter(this, table);
 		gridview.setAdapter(adapter);
+		
+		
+		// autofit width
+		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels;
+		gridview.setColumnWidth(width/4 - 10);
 
 		if (table.size() == 12) {
 			draw3.setEnabled(true);

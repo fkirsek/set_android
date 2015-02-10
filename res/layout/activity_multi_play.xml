@@ -150,7 +150,7 @@
         android:layout_marginTop="50dp"
         android:gravity="fill_horizontal|fill_vertical"
         android:horizontalSpacing="5dp"
-        android:numColumns="3"
+        android:numColumns="4"
         android:verticalSpacing="5dp" />
 
     <!--
