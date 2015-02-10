@@ -72,14 +72,17 @@ public class MultiPlayActivity extends Activity {
 			findViewById(R.id.setsPlayer2).setVisibility(View.GONE);
 		}
 
+		// autofit width
+		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - 20;
+		// 50dpi sa svake strane (za javljanje igraca), 5 spacing
+		width = (int)(width/ 4);
+		//gridview.setColumnWidth((int)(width - convertDpToPixel(100, this) / 4 - 5));
+		
 		gridview = (GridView) findViewById(R.id.gridview);
-		adapter = new ImageAdapter(this, table);
+		adapter = new ImageAdapter(this, table, width);
 		gridview.setAdapter(adapter);
 		
-		// autofit width
-		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels;
-		// 50dpi sa svake strane (za javljanje igraca), 5 spacing
-		gridview.setColumnWidth((int)(width - convertDpToPixel(100, this) / 4 - 5));
+
 
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
