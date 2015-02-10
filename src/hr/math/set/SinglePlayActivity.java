@@ -9,10 +9,13 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +59,14 @@ public class SinglePlayActivity extends Activity {
 		chronometer.setBase(stopwatch.getWhenToStart());
 		chronometer.start();
 	}
+	
+	public static float convertDpToPixel(float dp, Context context){
+	    Resources resources = context.getResources();
+	    DisplayMetrics metrics = resources.getDisplayMetrics();
+	    float px = dp * (metrics.densityDpi / 160f);
+	    return px;
+	}
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +101,7 @@ public class SinglePlayActivity extends Activity {
 		
 		// autofit width
 		
-		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - 25;
+		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - (int) convertDpToPixel(40, this);
 		width = (int)(width/4);
 		//gridview.setColumnWidth(width/4 - 10);
 		

@@ -73,7 +73,7 @@ public class MultiPlayActivity extends Activity {
 		}
 
 		// autofit width
-		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - 110;
+		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - (int) convertDpToPixel(110, this);
 		// 50dpi sa svake strane (za javljanje igraca), 5 spacing
 		width = (int)(width/ 4);
 		//gridview.setColumnWidth((int)(width - convertDpToPixel(100, this) / 4 - 5));
@@ -126,6 +126,7 @@ public class MultiPlayActivity extends Activity {
 		} else {
 			scores[playerOnMove]--;
 		}
+		
 		updateScoreDisplay();
 
 		((Button) findViewById(playerId[playerOnMove])).setBackgroundColor(getResources().getColor(

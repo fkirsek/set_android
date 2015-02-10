@@ -16,6 +16,7 @@ public class ImageAdapter extends BaseAdapter {
 	private Table table;
 	private int	widthKroz4;
 	private int height;
+	
 	public ImageAdapter(Context c, Table t, int w) {
 		table = t;
 		mContext = c;
@@ -43,14 +44,16 @@ public class ImageAdapter extends BaseAdapter {
 			imageView = new ImageView(mContext);
 			int unutarnjiWidth = widthKroz4;
 			int unutarnjiHeight = height;
+			/*
 			int wP = (int) 0.04*widthKroz4 + 2;
 			int hP = (int) 0.04*height + 2; 
+			*/
+			
 			imageView.setLayoutParams(new GridView.LayoutParams(unutarnjiWidth, unutarnjiHeight)); //-2 is wrap content
 			
-			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-			imageView.setAdjustViewBounds(true);
+			imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);			
+			imageView.setPadding(2,6,2,5);
 			
-			imageView.setPadding(wP,hP,wP,hP);
 		} else {
 			imageView = (ImageView) convertView;
 		}
