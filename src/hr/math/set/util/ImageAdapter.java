@@ -21,7 +21,7 @@ public class ImageAdapter extends BaseAdapter {
 		table = t;
 		mContext = c;
 		widthKroz4 = w - 10;
-		height = (int) (widthKroz4 * 1.643);
+		height = (int) (widthKroz4 * 1.577);
 	}
 
 	public int getCount() {
@@ -42,6 +42,7 @@ public class ImageAdapter extends BaseAdapter {
 		if (convertView == null) { // if it's not recycled, initialize some
 									// attributes
 			imageView = new ImageView(mContext);
+			
 			int unutarnjiWidth = widthKroz4;
 			int unutarnjiHeight = height;
 			/*

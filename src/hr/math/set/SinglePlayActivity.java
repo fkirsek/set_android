@@ -16,6 +16,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,14 +101,20 @@ public class SinglePlayActivity extends Activity {
 
 		
 		// autofit width
-		
+		//alternative version, doesn't work as expected
+		/*
+		DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+		*/
+        
 		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - (int) convertDpToPixel(40, this);
 		width = (int)(width/4);
-		//gridview.setColumnWidth(width/4 - 10);
-		
+				
 		// setting up the grid view
 		gridview = (GridView) findViewById(R.id.gridview);
-		adapter = new ImageAdapter(this, table, width);
+		adapter = new ImageAdapter(this, table, width );
 		gridview.setAdapter(adapter);
 		
 		
