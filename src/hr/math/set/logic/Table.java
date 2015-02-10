@@ -40,8 +40,9 @@ public class Table {
 		for (int i = 0; i < 4; i++) {
 			drawNext3();
 		}
-		// ensureSet(); //this is most probably unneeded since a set is
-		// guaranteed in first 12 cards
+		ensureSet();
+		// this can be modified later so that, for example, user has to notice
+		// by himself that there are no sets
 	}
 
 	public void reset() {
