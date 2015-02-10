@@ -134,6 +134,8 @@ public class MultiPlayActivity extends Activity {
 		table.clearSelection();
 		gridview.setEnabled(false);
 		setClickableMultiplayerButtons(true);
+		
+		adapter.notifyDataSetChanged();
 	}
 
 	public void playerMove(View v) {
