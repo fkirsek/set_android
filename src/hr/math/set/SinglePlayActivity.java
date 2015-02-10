@@ -90,7 +90,7 @@ public class SinglePlayActivity extends Activity {
 		
 		// autofit width
 		
-		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - 10;
+		int width = getBaseContext().getResources().getDisplayMetrics().widthPixels - 25;
 		width = (int)(width/4);
 		//gridview.setColumnWidth(width/4 - 10);
 		
