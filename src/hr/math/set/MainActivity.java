@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 
 		custom_font = Typeface.createFromAsset(getAssets(),
-				"fonts/Drawing Guides.ttf");
+				"fonts/KGSecondChancesSketch.ttf");
 
 		// JSON/GSON shenaningans
 		String jsonData = prefs.getString("SinglePlayerObjects", "");
@@ -95,8 +95,8 @@ public class MainActivity extends Activity {
 			// new game
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-			builder.setTitle("Are you sure?");
-			builder.setPositiveButton("Yes",
+			builder.setTitle(getResources().getString(R.string.are_you_sure));
+			builder.setPositiveButton(getResources().getString(R.string.yes),
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog,
@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
 							startNewSinglePlay();
 						}
 					});
-			builder.setNegativeButton("No", null);
+			builder.setNegativeButton(getResources().getString(R.string.no), null);
 			builder.create().show();
 		} else {
 			// Resume button is not visible -> start new game immediately
@@ -126,7 +126,7 @@ public class MainActivity extends Activity {
 	public void newMultiPlay(View view) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		builder.setTitle("Pick number of players").setItems(
+		builder.setTitle(getResources().getString(R.string.pick_num_players)).setItems(
 				R.array.num_players, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						// The 'which' argument contains the index position

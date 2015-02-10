@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SinglePlayActivity extends Activity {
 
@@ -63,7 +62,8 @@ public class SinglePlayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_single_play);
 
-		Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+		Typeface custom_font = Typeface.createFromAsset(getAssets(),
+				"fonts/KGSecondChancesSketch.ttf");
 
 		((Button) findViewById(R.id.btnHint)).setTypeface(custom_font);
 		((Button) findViewById(R.id.btnNext3)).setTypeface(custom_font);
@@ -126,7 +126,8 @@ public class SinglePlayActivity extends Activity {
 	}
 
 	public void endGame() {
-		//Toast.makeText(SinglePlayActivity.this, "Kraj partije", Toast.LENGTH_SHORT).show();
+		// Toast.makeText(SinglePlayActivity.this, "Kraj partije",
+		// Toast.LENGTH_SHORT).show();
 		SinglePlayerObjects.clear(); // clear the objects from the
 										// SinglePlayerObjects class
 

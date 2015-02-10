@@ -26,7 +26,8 @@ public class StatisticsActivity extends Activity {
 		/*
 		 * Font
 		 */
-		Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+		Typeface custom_font = Typeface.createFromAsset(getAssets(),
+				"fonts/KGSecondChancesSketch.ttf");
 
 		((TextView) findViewById(R.id.tvHighScore)).setTypeface(custom_font);
 		((TextView) findViewById(R.id.tvLastScore)).setTypeface(custom_font);

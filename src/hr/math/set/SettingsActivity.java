@@ -26,13 +26,13 @@ public class SettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
-		Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Drawing Guides.ttf");
+		Typeface custom_font = Typeface.createFromAsset(getAssets(),
+				"fonts/KGSecondChancesSketch.ttf");
 
 		((TextView) findViewById(R.id.tvPlayerName)).setTypeface(custom_font);
 		((TextView) findViewById(R.id.tvReshuffling)).setTypeface(custom_font);
 		((TextView) findViewById(R.id.tvTimeoutText)).setTypeface(custom_font);
-		
-		
+
 		prefs = getSharedPreferences("SET", MODE_PRIVATE);
 		editor = prefs.edit();
 
@@ -124,7 +124,7 @@ public class SettingsActivity extends Activity {
 		super.onPause();
 
 		editor.putString("playerName", etPlayerName.getText().toString());
-		
+
 		editor.putBoolean("cardDeckReshuffle", tbReshuffle.isChecked());
 
 		String tempTimeoutStr = etTimeout.getText().toString();

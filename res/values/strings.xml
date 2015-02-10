@@ -24,6 +24,12 @@
     <string name="lastScoreDeck">Last Score</string>
     <string name="OK">OK</string>
     <string name="player_name">Player Name</string>
+    <string name="enter_name">Enter your name</string>
+    <string name="new_high_score">NEW HIGH SCORE</string>
+    <string name="pick_num_players">Pick number of players</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string-array name="num_players">
         <item>2</item>

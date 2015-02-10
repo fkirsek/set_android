@@ -46,7 +46,7 @@ public class SingleResultsActivity extends Activity {
 
 		if (isHighScore) {
 			newHighScore.setVisibility(View.VISIBLE);
-			newHighScore.setText("NEW HIGH SCORE"); // TODO i18n
+			newHighScore.setText(getResources().getString(R.string.new_high_score));
 		} else {
 			newHighScore.setVisibility(View.GONE);
 		}
@@ -67,7 +67,7 @@ public class SingleResultsActivity extends Activity {
 		String enteredPlayerName = playerName.getText().toString();
 		if (enteredPlayerName.isEmpty()) {
 			playerName.requestFocus();
-			playerName.setHint("Enter your name"); // TODO i18n
+			playerName.setHint(getResources().getString(R.string.enter_name));
 			return;
 		}
 		
